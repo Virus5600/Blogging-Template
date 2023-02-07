@@ -18,6 +18,10 @@ $(document).ready(() => {
 			target.attr('aria-expanded', 'true');
 			target.find('.aria-link').attr('aria-hidden', 'false');
 			target.find('.aria-link').removeAttr('tabindex');
+
+			$(`.sidebar`).addClass('notransition')
+				.css(`top`, 0)
+				.removeClass('notransition');
 		}
 		else {
 			target.attr('aria-expanded', 'false');

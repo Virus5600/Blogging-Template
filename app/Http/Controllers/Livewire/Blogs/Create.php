@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\Livewire\Blogs;
 
+use Illuminate\Http\Request;
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 use App\Models\Blog;
+use App\Models\BlogContentImage;
 
 use Auth;
 use DB;
 use DOMDocument;
 use Exception;
 use Log;
+use Storage;
 use Validator;
 
 class Create extends Component
@@ -19,7 +23,7 @@ class Create extends Component
 	use WithFileUploads;
 
 	// Fields (models)
-	public $title, $summary, $poster, $content, $is_draft, $author;
+	public $title, $summary, $poster, $content, $is_draft;
 
 	// Validation
 	protected $rules = [
@@ -52,20 +56,25 @@ class Create extends Component
 	}
 
 	// FORM FUNCTIONS //
-	public function create() {
-		dd($this->content);
+	public function create(Request $req) {
 		$validator = Validator::make([
-			$title, $summary, $poster, $content, $is_draft
-		], $rules, $messages);
+			"title" => $this->title,
+			"summary" => $this->summary,
+			"poster" => $this->poster,
+			"content" => $this->content,
+			"is_draft" => $this->is_draft
+		], $this->rules, $this->messages);
 
 		if ($validator->fails()) {
+			$validator->validate();
 			return;
 		}
 
 		try {
 			DB::beginTransaction();
 
-			$slug = preg_replace('/\s+/', '_', $this->title);
+			$slug = strtolower(preg_replace('/(\s+)|([.,\!\?\*\|\(\)\[\]\{\}@#\$\%\^\&\+=])/', '_', $this->title));
+			Log::debug($slug);
 
 			// Blog content is to follow and thus, a placeholder will be used.
 			$blog = Blog::create([
@@ -79,10 +88,10 @@ class Create extends Component
 
 			// File handling
 			if ($this->poster) {
-				$destination = "uploads/blogs/{$this->slug}";
+				$destination = "uploads/blogs/{$slug}";
 				$fileType = $this->poster->getClientOriginalExtension();
 				$image = "{$slug}-" . uniqid() . ".{$fileType}";
-				$this->poster->move($destination, $image);
+				$this->poster->storeAs($destination, $image, 'public');
 				
 				$blog->poster = $image;
 			}
@@ -101,7 +110,7 @@ class Create extends Component
 				$image = str_replace($replace, '', $i->getAttribute('src'));
 				$image_name = $slug . '-content_image-' . uniqid() . '.' . $extension;
 
-				Storage::disk('root')->put("/blogs/{$slug}/content/{$image_name}", base64_decode($image));
+				Storage::disk('public')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image));
 
 				BlogContentImage::create([
 					'blog_id' => $blog->id,
@@ -114,8 +123,8 @@ class Create extends Component
 				$i->setAttribute('data-fallback-image', asset('/uploads/announcements/default.png'));
 			}
 
-			$announcement->content = $dom->saveHTML();
-			$announcement->save();
+			$blog->content = $dom->saveHTML();
+			$blog->save();
 
 			DB::commit();
 		} catch (Exception $e) {

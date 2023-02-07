@@ -19,6 +19,6 @@ class BlogContentImage extends Model
 
 	// Custom Function
 	public function getImage() {
-		return asset('uploads/blogs/'.$this->blog->slug.'/content/'.$this->image_name);
+		return asset('storage/uploads/blogs/'.$this->blog->slug.'/content/'.$this->image_name);
 	}
 }

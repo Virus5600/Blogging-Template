@@ -38,6 +38,7 @@ $user = Auth::user();
 		@yield('meta')
 
 		{{-- CSS --}}
+		<link href="{{ asset('css/util/custom-scrollbar.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/admin.css') }}" rel="stylesheet">
@@ -64,7 +65,7 @@ $user = Auth::user();
 		<title>@yield('title') - {{ $settings['web_name'] }}</title>
 	</head>
 
-	<body style="height: 100vh;">
+	<body class="custom-scrollbar" style="height: 100vh;">
 		{{-- SHOWS THIS INSTEAD WHEN JAVASCRIPT IS DISABLED --}}
 		<div style="position: absolute; height: 100vh; width: 100vw; background-color: #ccc;" id="js-disabled">
 			<style type="text/css">
@@ -95,7 +96,7 @@ $user = Auth::user();
 			<main class="content-fluid d-flex flex-column flex-fill m-0 w-lg-75" style="z-index: 0;" id="content">
 				@include('components.admin.header')
 
-				<div class="content container-fluid py-3" style="overflow-y: hidden;">
+				<div class="content container-fluid py-3 flex-fill" style="overflow-y: hidden;">
 					@yield('content')
 				</div>
 			</main>

@@ -33,6 +33,6 @@ class Blog extends Model
 
 	// Custom Functions
 	public function getPoster() {
-		return asset('uploads/blogs/'.$this->slug.'/'.$this->poster);
+		return asset('storage/uploads/blogs/'.$this->slug.'/'.$this->poster);
 	}
 }

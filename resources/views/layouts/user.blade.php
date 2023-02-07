@@ -37,6 +37,7 @@ $settings = [
 		@yield('meta')
 
 		{{-- CSS --}}
+		<link href="{{ asset('css/util/custom-scrollbar.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/user.css') }}" rel="stylesheet">
@@ -59,7 +60,7 @@ $settings = [
 		<title>@yield('title') - {{ $settings['web_name'] }}</title>
 	</head>
 
-	<body style="max-height: 100vh; heigh: 100vh;">
+	<body class="custom-scrollbar" style="max-height: 100vh; heigh: 100vh;">
 		{{-- SHOWS THIS INSTEAD WHEN JAVASCRIPT IS DISABLED --}}
 		<div style="position: absolute; height: 100vh; width: 100vw; background-color: #ccc;" id="js-disabled">
 			<style type="text/css">

@@ -35,6 +35,7 @@
 							<th class="text-center">Poster</th>
 							<th class="text-center">Title</th>
 							<th class="text-center">Summary</th>
+							<th class="text-center">Status</th>
 							<th class="text-center"></th>
 						</tr>
 					</thead>
@@ -48,52 +49,64 @@
 
 							<td class="text-center align-middle font-weight-bold">{{ $b->title }}</td>
 							<td class="text-center align-middle">{{ $b->summary }}</td>
+							
+							<td class="text-center align-middle">
+								@if ($b->trashed())
+								<i class="fas fa-circle text-danger mr-2"></i>Deleted
+								@else
+									@if ($b->is_draft)
+									<i class="fas fa-circle text-info mr-2"></i>Draft
+									@else
+									<i class="fas fa-circle text-success mr-2"></i>Published
+									@endif
+								@endif
+							</td>
 
 							<td class="text-center align-middle">
 								<div class="dropdown">
 									<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Actions</button>
-								</div>
-
-								<div class="dropdown-menu">
-									{{-- EDIT --}}
-									<a href="#" class="dropdown-item">
-										<i class="fas fa-pencil mr-2"></i>Edit
-									</a>
 									
-									{{-- DRAFT --}}
-									@if ($b->is_draft)
-									<a href="#" class="dropdown-item">
-										<i class="fas fa-upload mr-2"></i>Publish
-									</a>
-									@else
-									<a href="#" class="dropdown-item">
-										<i class="fas fa-note-sticky mr-2"></i>Draft
-									</a>
-									@endif
-									
-									{{-- DELETE --}}
-									@if ($b->isTrashed())
-									<a href="#" class="dropdown-item">
-										<i class="fas fa-recycle mr-2"></i>Restore
-									</a>
-									@else
-									<a href="#" class="dropdown-item">
-										<i class="fas fa-trash mr-2"></i>Delete
-									</a>
-									@endif
+									<div class="dropdown-menu">
+										{{-- EDIT --}}
+										<a href="#" class="dropdown-item">
+											<i class="fas fa-pencil mr-2"></i>Edit
+										</a>
+										
+										{{-- DRAFT --}}
+										@if ($b->is_draft)
+										<a href="#" class="dropdown-item">
+											<i class="fas fa-upload mr-2"></i>Publish
+										</a>
+										@else
+										<a href="#" class="dropdown-item">
+											<i class="fas fa-note-sticky mr-2"></i>Draft
+										</a>
+										@endif
+										
+										{{-- DELETE --}}
+										@if ($b->trashed())
+										<a href="#" class="dropdown-item">
+											<i class="fas fa-recycle mr-2"></i>Restore
+										</a>
+										@else
+										<a href="#" class="dropdown-item">
+											<i class="fas fa-trash mr-2"></i>Delete
+										</a>
+										@endif
+									</div>
 								</div>
 							</td>
 						</tr>
 						@empty
 						<tr class="enlarge-on-hover">
-							<td colspan="4" class="text-center align-middle">Nothing to show~</td>
+							<td colspan="5" class="text-center align-middle">Nothing to show~</td>
 						</tr>
 						@endforelse
 					</tbody>
 
 					<tfoot>
 						<tr>
-							<td colspan="4">
+							<td colspan="5">
 								{{ $blogs->links() }}
 							</td>
 						</tr>
