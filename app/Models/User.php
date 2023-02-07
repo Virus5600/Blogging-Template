@@ -43,9 +43,10 @@ class User extends Authenticatable
 
 	// Custom Function
 	public function getAvatar($useDefault=false, $getFull=true) {
-		$avatarF = $this->avatar;
-		$avatarU = asset('/uploads/users/'.$this->avatar);
-		$avatarD = asset('/uploads/users/default.png');
+		$avatar = $this->avatar;
+		$avatarF = $avatar == null ? 'default.png' : $avatar;
+		$avatarU = asset("storage/uploads/users/{$avatar}");
+		$avatarD = asset('storage/uploads/users/default.png');
 		$toRet = null;
 
 		if ($useDefault) {

@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
-
-use Log;
 
 class ExampleTest extends TestCase
 {
+    use DatabaseMigrations;
+    
     /**
      * A basic test example.
      *
@@ -18,6 +19,7 @@ class ExampleTest extends TestCase
     {
         $response = $this->withoutExceptionHandling()
             ->withoutDeprecationHandling()
+            ->seed()
             ->get('/')
             ->assertStatus(200);
     }

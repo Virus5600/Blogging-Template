@@ -34,14 +34,15 @@ class Settings extends Model
 		$setting = Settings::where('name', '=', $key)->first();
 
 		if ($setting->is_file)
-			return asset('uploads/settings/' . $setting->value);
+			return asset('storage/uploads/settings/' . $setting->value);
 		return $setting->value;
 	}
 
 	public function getImage($useDefault=false, $getFull=true) {
-		$settingF = $this->value;
-		$settingU = asset('/uploads/settings/'.$this->value);
-		$settingD = asset('/uploads/settings/default.png');
+		$value = $this->value;
+		$settingF = $value == null ? 'default.png' : $value;
+		$settingU = asset("storage/uploads/settings/{$settingF}");
+		$settingD = asset('storage/uploads/settings/default.png');
 		$toRet = null;
 
 		if ($useDefault) {
