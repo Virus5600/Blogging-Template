@@ -1,0 +1,283 @@
+.content {
+	height: 100%;
+}
+
+.footer {
+	background-color: #efefef;
+}
+
+.clamp-lines-1,
+.clamp-lines-xs-1 {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+
+	position: relative;
+}
+
+.clamp-lines-2,
+.clamp-lines-xs-2 {
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+
+	position: relative;
+}
+
+.clamp-lines-3,
+.clamp-lines-xs-3 {
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+
+	position: relative;
+}
+
+.clamp-lines-4,
+.clamp-lines-xs-4 {
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+
+	position: relative;
+}
+
+.clamp-lines-5,
+.clamp-lines-xs-5 {
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+
+	position: relative;
+}
+
+.clamp-lines-1 .clamp-line, .clamp-lines-2 .clamp-line, .clamp-lines-3 .clamp-line, .clamp-lines-4 .clamp-line, .clamp-lines-5 .clamp-line,
+.clamp-lines-xs-1 .clamp-line, .clamp-lines-xs-2 .clamp-line, .clamp-lines-xs-3 .clamp-line, .clamp-lines-xs-4 .clamp-line, .clamp-lines-xs-5 .clamp-line,
+.clamp-lines-sm-1 .clamp-line, .clamp-lines-sm-2 .clamp-line, .clamp-lines-sm-3 .clamp-line, .clamp-lines-sm-4 .clamp-line, .clamp-lines-sm-5 .clamp-line,
+.clamp-lines-md-1 .clamp-line, .clamp-lines-md-2 .clamp-line, .clamp-lines-md-3 .clamp-line, .clamp-lines-md-4 .clamp-line, .clamp-lines-md-5 .clamp-line,
+.clamp-lines-lg-1 .clamp-line, .clamp-lines-lg-2 .clamp-line, .clamp-lines-lg-3 .clamp-line, .clamp-lines-lg-4 .clamp-line, .clamp-lines-lg-5 .clamp-line,
+.clamp-lines-xl-1 .clamp-line, .clamp-lines-xl-2 .clamp-line, .clamp-lines-xl-3 .clamp-line, .clamp-lines-xl-4 .clamp-line, .clamp-lines-xl-5 .clamp-line {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	display: block;
+	width: 100%;
+	height: 3.75rem;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1rem;
+	padding-top: 2.5rem;
+	background-image: linear-gradient(to bottom, transparent, white);
+}
+
+.cover-article {
+	max-height: 20rem;
+	overflow: hidden;
+}
+
+.cover-article .card-img-top {
+	height: 12.5rem;
+	object-fit: cover;
+	object-position: center;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+	.clamp-lines-sm-1 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-sm-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-sm-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-sm-4 {
+		display: -webkit-box;
+		-webkit-line-clamp: 5;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-sm-5 {
+		display: -webkit-box;
+		-webkit-line-clamp: 6;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+	.cover-article .card-img-top {
+		height: auto;
+	}
+
+	.clamp-lines-md-1 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-md-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-md-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-md-4 {
+		display: -webkit-box;
+		-webkit-line-clamp: 5;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-md-5 {
+		display: -webkit-box;
+		-webkit-line-clamp: 6;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.clamp-lines-lg-1 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-lg-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-lg-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-lg-4 {
+		display: -webkit-box;
+		-webkit-line-clamp: 5;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-lg-5 {
+		display: -webkit-box;
+		-webkit-line-clamp: 6;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+	.clamp-lines-xl-1 {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-xl-2 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-xl-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-xl-4 {
+		display: -webkit-box;
+		-webkit-line-clamp: 5;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+
+	.clamp-lines-xl-5 {
+		display: -webkit-box;
+		-webkit-line-clamp: 6;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+
+		position: relative;
+	}
+}

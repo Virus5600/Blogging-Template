@@ -1,0 +1,30 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Bootstrap 4
+@import "node_modules/bootstrap/dist/css/bootstrap.min";
+@import "node_modules/bootstrap-select/dist/css/bootstrap-select.min";
+
+// Sweetalert 2
+@import "node_modules/sweetalert2/dist/sweetalert2.min";
+
+// Slick Carousel
+@import "node_modules/slick-carousel/slick/slick";
+@import "node_modules/slick-carousel/slick/slick-theme";
+
+// Fontawesome 6
+@import "node_modules/@fortawesome/fontawesome-free/css/svg-with-js.min";
+
+// Summernote
+@import "node_modules/summernote/dist/summernote-lite.min";
+
+.note-modal-footer {
+	height: auto;
+	display: flex;
+
+	.note-btn {
+		float: none;
+		margin-left: auto;
+	}
+}
