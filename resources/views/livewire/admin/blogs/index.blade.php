@@ -3,26 +3,26 @@
 <div class="d-flex flex-column">
 	{{-- HEADER --}}
 	<div class="row">
-		<div class="col-12 col-lg-8">
+		<div class="col-4 col-lg-8">
 			<h2 class="align-middle">Blogs</h2>
 		</div>
 
-		<div class="col-12 col-lg-4 d-flex">
+		<div class="col-8 col-lg-4 d-flex">
 			{{-- ADD --}}
 			<a href="{{ route('admin.blogs.create') }}" class="btn btn-success my-auto mx-1">
 				<i class="fas fa-plus-circle mr-2"></i>Add Blog
 			</a>
 
 			{{-- SEARCH --}}
-			<form class="input-group my-auto mx-1" wire:submit.prevent="search">
-				<input type="text" class="form-control" placeholder="Press / to search" accesskey="/" wire:model="search" data-input-focus="/" data-input-focused-placeholder="Search...">
+			<div class="input-group my-auto mx-1">
+				<input type="text" class="form-control" placeholder="Press / to search" accesskey="/" wire:model.lazy="search" data-input-focus="/" data-input-focused-placeholder="Search...">
 
 				<div class="input-group-append">
-					<button type="submit" class="btn btn-secondary">
+					<button type="button" class="btn btn-secondary" wire:click="render">
 						<i class="fas fa-magnifying-glass" title="Search"></i>
 					</button>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 
@@ -74,22 +74,22 @@
 										
 										{{-- DRAFT --}}
 										@if ($b->is_draft)
-										<a href="#" class="dropdown-item">
+										<a href="javascript:void(0);" class="dropdown-item" wire:click="publish({{ $b->id }})">
 											<i class="fas fa-upload mr-2"></i>Publish
 										</a>
 										@else
-										<a href="#" class="dropdown-item">
+										<a href="javascript:void(0);" class="dropdown-item" wire:click="draft({{ $b->id }})">
 											<i class="fas fa-note-sticky mr-2"></i>Draft
 										</a>
 										@endif
 										
 										{{-- DELETE --}}
 										@if ($b->trashed())
-										<a href="#" class="dropdown-item">
+										<a href="javascript:void(0);" class="dropdown-item">
 											<i class="fas fa-recycle mr-2"></i>Restore
 										</a>
 										@else
-										<a href="#" class="dropdown-item">
+										<a href="javascript:void(0);" class="dropdown-item">
 											<i class="fas fa-trash mr-2"></i>Delete
 										</a>
 										@endif

@@ -5,7 +5,7 @@ window.addEventListener('flash_error', (e) => {
 		position: `top`,
 		showConfirmButton: false,
 		toast: true,
-		duration: 10000,
+		timer: 10000,
 		background: `#dc3545`,
 		customClass: {
 			title: `text-white`,
@@ -24,7 +24,7 @@ window.addEventListener('flash_info', (e) => {
 		position: `top`,
 		showConfirmButton: false,
 		toast: true,
-		duration: 10000,
+		timer: 10000,
 		background: `#17a2b8`,
 		customClass: {
 			title: `text-white`,
@@ -43,8 +43,8 @@ window.addEventListener('flash_success', (e) => {
 		position: `top`,
 		showConfirmButton: false,
 		toast: true,
-		duration: 10000,
-		background: `#17a2b8`,
+		timer: 10000,
+		background: `#28a745`,
 		customClass: {
 			title: `text-white`,
 			content: `text-white`,
@@ -70,7 +70,7 @@ const __setLivewireSwalOptions = (options, flash) => {
 	
 	if (flash.has_timer != undefined)
 		if (flash.has_timer)
-			options['duration'] = flash.duration != undefined ? flash.duration : 10000;
+			options['timer'] = flash.duration != undefined ? flash.duration : 10000;
 		else
 			delete options['duration'];
 

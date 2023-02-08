@@ -74,7 +74,6 @@ class Create extends Component
 			DB::beginTransaction();
 
 			$slug = strtolower(preg_replace('/(\s+)|([.,\!\?\*\|\(\)\[\]\{\}@#\$\%\^\&\+=])/', '_', $this->title));
-			Log::debug($slug);
 
 			// Blog content is to follow and thus, a placeholder will be used.
 			$blog = Blog::create([

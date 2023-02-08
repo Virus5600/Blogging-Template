@@ -28,7 +28,7 @@
 			<div class="col-12 col-lg-6">
 				<div class="form-group text-center text-lg-left w-100" style="max-height: 22.5rem;">
 					<label for="image" class="h5">Blog Poster</label><br>
-					<img src="{{ $poster ? $poster->temporaryUrl() : asset('uploads/blogs/default.png') }}" alt="Blog Poster" class="img-fluid cursor-pointer border" style="border-width: 0.25rem!important; max-height: 16.25rem;" id="image" data-img-fallback="{{ asset('uploads/blogs/default.png') }}">
+					<img src="{{ $poster ? $poster->temporaryUrl() : asset('storage/uploads/blogs/default.png') }}" alt="Blog Poster" class="img-fluid cursor-pointer border" style="border-width: 0.25rem!important; max-height: 16.25rem;" id="image" data-img-fallback="{{ asset('uploads/blogs/default.png') }}">
 					<input type="file" name="image" wire:model.lazy="poster" class="d-none" accept=".jpg,.jpeg,.png,.webp"><br>
 					<small class="text-muted pt-0 mt-0"><b>ALLOWED FORMATS:</b> JPEG, JPG, PNG, WEBP</small><br>
 					<small class="text-muted pt-0 mt-0"><b>MAX SIZE:</b> 10MB</small><br>
