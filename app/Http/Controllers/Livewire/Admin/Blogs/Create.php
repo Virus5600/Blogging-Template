@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Livewire\Blogs;
+namespace App\Http\Controllers\Livewire\Admin\Blogs;
 
 use Illuminate\Http\Request;
 
@@ -50,7 +50,7 @@ class Create extends Component
 
 	// COMPONENT FUNCTION //
 	public function render() {
-		return view('livewire.blogs.create')
+		return view('livewire.admin.blogs.create')
 			->extends('layouts.admin')
 			->section('content');
 	}

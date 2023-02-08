@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Livewire\Blogs;
+namespace App\Http\Controllers\Livewire\Admin\Blogs;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -32,7 +32,7 @@ class Index extends Component
 			->orWhere("summary", "LIKE", $search)
 			->paginate(10, ["*"], 'blogs');
 
-		return view('livewire.blogs.index', [
+		return view('livewire.admin.blogs.index', [
 			'blogs' => $blogs
 		])
 			->extends('layouts.admin')

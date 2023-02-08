@@ -117,7 +117,7 @@
 
 .gallery-image {
 	width: 100%;
-	height: 400px;
+	height: 50rem;
 	object-fit: cover;
 	object-position: center;
 }
@@ -281,6 +281,21 @@
 	border-width: 5px;
 }
 
+.opacity-0,
+.opacity-xs-0 {
+	opacity: 0;
+}
+
+.opacity-100,
+.opacity-xs-100 {
+	opacity: 100%;
+}
+
+.h-inherit,
+.h-xs-inherit {
+	height:  inherit!important;
+}
+
 .circular-border {
 	border-radius: 50%;
 }
@@ -292,6 +307,14 @@ textarea.not-resizable {
 .important:after {
 	content: " *";
 	color: #dc3545;
+}
+
+.backdrop-blur,
+.backdrop-xs-blur {
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	-moz-backdrop-filter: blur(8px);
+	-o-backdrop-filter: blur(8px);
 }
 
 /* ANIMATION RELATED */
@@ -399,6 +422,25 @@ textarea.not-resizable {
 	.border-w-sm-5 {
 		border-width: 5px;
 	}
+
+	.backdrop-sm-blur {
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		-moz-backdrop-filter: blur(8px);
+		-o-backdrop-filter: blur(8px);
+	}
+
+	.opacity-sm-0 {
+		opacity: 0;
+	}
+
+	.opacity-sm-100 {
+		opacity: 100%;
+	}
+
+	.h-sm-inherit {
+		height:  inherit!important;
+	}
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -481,6 +523,25 @@ textarea.not-resizable {
 
 	.border-w-md-5 {
 		border-width: 5px;
+	}
+
+	.backdrop-md-blur {
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		-moz-backdrop-filter: blur(8px);
+		-o-backdrop-filter: blur(8px);
+	}
+
+	.opacity-md-0 {
+		opacity: 0;
+	}
+
+	.opacity-md-100 {
+		opacity: 100%;
+	}
+
+	.h-md-inherit {
+		height:  inherit!important;
 	}
 }
 
@@ -565,6 +626,25 @@ textarea.not-resizable {
 	.border-w-lg-5 {
 		border-width: 5px;
 	}
+
+	.backdrop-lg-blur {
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		-moz-backdrop-filter: blur(8px);
+		-o-backdrop-filter: blur(8px);
+	}
+
+	.opacity-lg-0 {
+		opacity: 0;
+	}
+
+	.opacity-lg-100 {
+		opacity: 100%;
+	}
+
+	.h-lg-inherit {
+		height:  inherit!important;
+	}
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
@@ -647,5 +727,24 @@ textarea.not-resizable {
 
 	.border-w-xl-5 {
 		border-width: 5px;
+	}
+
+	.backdrop-xl-blur {
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		-moz-backdrop-filter: blur(8px);
+		-o-backdrop-filter: blur(8px);
+	}
+
+	.opacity-xl-0 {
+		opacity: 0;
+	}
+
+	.opacity-xl-100 {
+		opacity: 100%;
+	}
+
+	.h-xl-inherit {
+		height:  inherit!important;
 	}
 }

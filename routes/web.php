@@ -34,9 +34,9 @@ Route::group(['prefix' => 'admin'], function() {
 		// Blogs
 		Route::group(['prefix' => 'blogs'], function() {
 			// Index
-			Route::get('/', Livewire\Blogs\Index::class)->name('admin.blogs.index');
+			Route::get('/', Livewire\Admin\Blogs\Index::class)->name('admin.blogs.index');
 			// Create
-			Route::get('/create', Livewire\Blogs\Create::class)->name('admin.blogs.create');
+			Route::get('/create', Livewire\Admin\Blogs\Create::class)->name('admin.blogs.create');
 		});
 	});
 });
