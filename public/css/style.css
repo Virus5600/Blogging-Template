@@ -296,6 +296,57 @@
 	height:  inherit!important;
 }
 
+.card-columns-5,
+.card-columns-xs-5 {
+	column-count: 5;
+	-moz-column-count: 5;
+}
+
+.text-truncate-2 {
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	max-width: 100%;
+}
+
+.announcement-img~ .card-text, .text-truncate-3 {
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	max-width: 100%;
+}
+
+.text-truncate-4 {
+	-webkit-line-clamp: 4;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	max-width: 100%;
+}
+
+.text-truncate-5 {
+	-webkit-line-clamp: 5;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	max-width: 100%;
+}
+
+.text-truncate-6 {
+	-webkit-line-clamp: 6;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	max-width: 100%;
+}
+
 .circular-border {
 	border-radius: 50%;
 }
@@ -318,6 +369,7 @@ textarea.not-resizable {
 }
 
 /* ANIMATION RELATED */
+/* ENLARGE ON HOVER */
 .enlarge-on-hover {
 	position: relative;
 
@@ -334,10 +386,24 @@ textarea.not-resizable {
 	-moz-transform: scale(102.5%);
 	-ms-transform: scale(102.5%);
 	-o-transform: scale(102.5%);
-	transition: scale(102.5%);
+	transform: scale(102.5%);
 }
 .enlarge-on-hover:hover ~ * {
 	z-index: 0;
+}
+
+/* VISIBLE ON HOVER */
+.visible-on-hover {
+	-webkit-transition: .125s linear;
+	-moz-transition: .125s linear;
+	-ms-transition: .125s linear;
+	-o-transition: .125s linear;
+	transition: .125s linear;
+	
+	opacity: 0;
+}
+.visible-on-hover:hover {
+	opacity: 1;
 }
 /* ANIMATION RELATED END */
 
@@ -441,6 +507,11 @@ textarea.not-resizable {
 	.h-sm-inherit {
 		height:  inherit!important;
 	}
+
+	.card-columns-sm-5 {
+		column-count: 5;
+		-moz-column-count: 5;
+	}
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -542,6 +613,11 @@ textarea.not-resizable {
 
 	.h-md-inherit {
 		height:  inherit!important;
+	}
+
+	.card-columns-md-5 {
+		column-count: 5;
+		-moz-column-count: 5;
 	}
 }
 
@@ -645,6 +721,11 @@ textarea.not-resizable {
 	.h-lg-inherit {
 		height:  inherit!important;
 	}
+
+	.card-columns-lg-5 {
+		column-count: 5;
+		-moz-column-count: 5;
+	}
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
@@ -746,5 +827,10 @@ textarea.not-resizable {
 
 	.h-xl-inherit {
 		height:  inherit!important;
+	}
+
+	.card-columns-xl-5 {
+		column-count: 5;
+		-moz-column-count: 5;
 	}
 }

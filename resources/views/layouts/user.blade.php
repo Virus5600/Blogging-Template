@@ -57,7 +57,7 @@ $settings = [
 		<link rel="mask-icon" href="{{ $settings['web_logo'] }}">
 
 		{{-- TITLE --}}
-		<title>@yield('title') - {{ $settings['web_name'] }}</title>
+		<title>{{ $settings['web_name'] }} | @yield('title')</title>
 	</head>
 
 	<body class="custom-scrollbar" style="max-height: 100vh; heigh: 100vh;">
@@ -105,16 +105,18 @@ $settings = [
 			</footer>
 
 			<!-- SCRIPTS -->
+			<script type="text/javascript" src="{{ asset("js/util/copy-to-clipboard.js") }}"></script>
+			<script type="text/javascript" src="{{ asset("js/util/social-share.js") }}"></script>
 			<script type="text/javascript">
 				@if (Session::has('flash_error'))
 				Swal.fire({
-					{!!Session::has('has_icon') ? "icon: `error`," : ""!!}
-					title: `{{Session::get('flash_error')}}`,
-					{!!Session::has('message') ? 'html: `' . Session::get('message') . '`,' : ''!!}
-					position: {!!Session::has('position') ? '`' . Session::get('position') . '`' : '`top`'!!},
+					{!! Session::has('has_icon') ? "icon: `error`," : "" !!}
+					title: `{!! Session::get('flash_error') !!}`,
+					{!! Session::has('message') ? 'html: `' . Session::get('message') . '`,' : '' !!}
+					position: {!! Session::has('position') ? '`' . Session::get('position') . '`' : '`top`' !!},
 					showConfirmButton: false,
-					toast: {!!Session::has('is_toast') ? Session::get('is_toast') : true!!},
-					{!!Session::has('has_timer') ? (Session::get('has_timer') ? (Session::has('duration') ? ('timer: ' . Session::get('duration')) . ',' : `timer: 10000,`) : '') : `timer: 10000,`!!}
+					toast: {!! Session::has('is_toast') ? Session::get('is_toast') : true !!},
+					{!! Session::has('has_timer') ? (Session::get('has_timer') ? (Session::has('duration') ? ('timer: ' . Session::get('duration')) . ',' : `timer: 10000,`) : '') : `timer: 10000,` !!}
 					background: `#dc3545`,
 					customClass: {
 						title: `text-white`,
@@ -124,13 +126,13 @@ $settings = [
 				});
 				@elseif (Session::has('flash_info'))
 				Swal.fire({
-					{!!Session::has('has_icon') ? "icon: `info`," : ""!!}
-					title: `{{Session::get('flash_info')}}`,
-					{!!Session::has('message') ? 'html: `' . Session::get('message') . '`,' : ''!!}
-					position: {!!Session::has('position') ? '`' . Session::get('position') . '`' : '`top`'!!},
+					{!! Session::has('has_icon') ? "icon: `info`," : "" !!}
+					title: `{!! Session::get('flash_info') !!}`,
+					{!! Session::has('message') ? 'html: `' . Session::get('message') . '`,' : '' !!}
+					position: {!! Session::has('position') ? '`' . Session::get('position') . '`' : '`top`' !!},
 					showConfirmButton: false,
-					toast: {!!Session::has('is_toast') ? Session::get('is_toast') : true!!},
-					{!!Session::has('has_timer') ? (Session::get('has_timer') ? (Session::has('duration') ? ('timer: ' . Session::get('duration')) . ',' : `timer: 10000,`) : '') : `timer: 10000,`!!}
+					toast: {!! Session::has('is_toast') ? Session::get('is_toast') : true !!},
+					{!! Session::has('has_timer') ? (Session::get('has_timer') ? (Session::has('duration') ? ('timer: ' . Session::get('duration')) . ',' : `timer: 10000,`) : '') : `timer: 10000,` !!}
 					background: `#17a2b8`,
 					customClass: {
 						title: `text-white`,
@@ -140,13 +142,13 @@ $settings = [
 				});
 				@elseif (Session::has('flash_success'))
 				Swal.fire({
-					{!!Session::has('has_icon') ? "icon: `success`," : ""!!}
-					title: `{{Session::get('flash_success')}}`,
-					{!!Session::has('message') ? 'html: `' . Session::get('message') . '`,' : ''!!}
-					position: {!!Session::has('position') ? '`' . Session::get('position') . '`' : '`top`'!!},
+					{!! Session::has('has_icon') ? "icon: `success`," : "" !!}
+					title: `{!! Session::get('flash_success') !!}`,
+					{!! Session::has('message') ? 'html: `' . Session::get('message') . '`,' : '' !!}
+					position: {!! Session::has('position') ? '`' . Session::get('position') . '`' : '`top`' !!},
 					showConfirmButton: false,
-					toast: {!!Session::has('is_toast') ? Session::get('is_toast') : true!!},
-					{!!Session::has('has_timer') ? (Session::get('has_timer') ? (Session::has('duration') ? ('timer: ' . Session::get('duration')) . ',' : `timer: 10000,`) : '') : `timer: 10000,`!!}
+					toast: {!! Session::has('is_toast') ? Session::get('is_toast') : true !!},
+					{!! Session::has('has_timer') ? (Session::get('has_timer') ? (Session::has('duration') ? ('timer: ' . Session::get('duration')) . ',' : `timer: 10000,`) : '') : `timer: 10000,` !!}
 					background: `#28a745`,
 					customClass: {
 						title: `text-white`,

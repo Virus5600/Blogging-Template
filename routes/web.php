@@ -19,6 +19,12 @@ Route::get('/email', 'PageController@email');
 // User/Public pages
 Route::get('/', 'PageController@home')->name('index');
 
+// Blogs
+Route::group(['prefix' => 'blogs'], function() {
+	Route::get('/', Livewire\Blogs\Index::class)->name('blogs.index');
+	Route::get('/{slug}', Livewire\Blogs\Show::class)->name('blogs.show');
+});
+
 // Admin pages
 Route::group(['prefix' => 'admin'], function() {
 	// Authentication

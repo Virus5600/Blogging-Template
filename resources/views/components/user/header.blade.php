@@ -14,7 +14,7 @@
 		<ul class="navbar-nav">
 			{{-- HOME --}}
 			<li class="navbar-item border-lg-left border-lg-right">
-				@if (\Request::is('/'))
+				@if (request()->is('/'))
 				<span class="nav-link px-2 active">Home</a>
 				@else
 				<a href="{{ route('index') }}" class="nav-link px-2">Home</a>
@@ -23,17 +23,21 @@
 
 			{{-- BLOGS --}}
 			<li class="navbar-item border-lg-left border-lg-right">
-				@if (\Request::is('/blogs'))
-				<span class="nav-link px-2 active">Blogs</a>
+				@if (request()->is('blogs'))
+				<span class="nav-link px-2 active">Blogs</span>
+				@elseif (request()->is('blogs/*'))
+				<a href="{{ route('blogs.index') }}" class="nav-link px-2 active">Blogs</a>
 				@else
-				<a href="{{ route('index') }}" class="nav-link px-2">Blogs</a>
+				<a href="{{ route('blogs.index') }}" class="nav-link px-2">Blogs</a>
 				@endif
 			</li>
 
 			{{-- VIDEOS --}}
 			<li class="navbar-item border-lg-left border-lg-right">
-				@if (\Request::is('/videos'))
-				<span class="nav-link px-2 active">Videos</a>
+				@if (request()->is('videos'))
+				<span class="nav-link px-2 active">Videos</span>
+				@elseif (request()->is('videos/*'))
+				<a href="{{ route('index') }}" class="nav-link px-2 active">Videos</a>
 				@else
 				<a href="{{ route('index') }}" class="nav-link px-2">Videos</a>
 				@endif
@@ -41,8 +45,8 @@
 
 			{{-- ABOUT ME --}}
 			<li class="navbar-item border-lg-left border-lg-right">
-				@if (\Request::is('/about-me'))
-				<span class="nav-link px-2 active">About Me</a>
+				@if (request()->is('about-me'))
+				<span class="nav-link px-2 active">About Me</span>
 				@else
 				<a href="{{ route('index') }}" class="nav-link px-2">About Me</a>
 				@endif
@@ -56,12 +60,3 @@
 	</div>
 	{{-- NAVBAR END --}}
 </nav>
-
-{{-- CAROUSEL --}}
-<div class="row mx-0">
-	<div class="col-12 mx-0">
-		<div class="w-100" id="carousel" data-image="{{ route('api.carousel.fetch') }}" data-sp="{{ asset('storage/uploads/settings/carousel') }}" data-arrow="{{ asset('images/settings/carousel/arrow.png') }}" data-flex="true"></div>
-		<script type="text/javascript" src="{{ asset('js/hooks/carouselHook.js') }}" id="carouselHook"></script>
-		<script type="text/javascript" src="{{ asset('js/components/login-page.js') }}"></script>
-	</div>
-</div>

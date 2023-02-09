@@ -73,7 +73,7 @@ class Create extends Component
 		try {
 			DB::beginTransaction();
 
-			$slug = strtolower(preg_replace('/(\s+)|([.,\!\?\*\|\(\)\[\]\{\}@#\$\%\^\&\+=])/', '_', $this->title));
+			$slug = strtolower(preg_replace('/(\s+)|([.,\!\?\*\|\(\)\[\]\{\}@#\$\%\^\&\+=])/', '-', $this->title));
 
 			// Blog content is to follow and thus, a placeholder will be used.
 			$blog = Blog::create([
@@ -90,7 +90,7 @@ class Create extends Component
 				$destination = "uploads/blogs/{$slug}";
 				$fileType = $this->poster->getClientOriginalExtension();
 				$image = "{$slug}-" . uniqid() . ".{$fileType}";
-				$this->poster->storeAs($destination, $image, 'public');
+				$this->poster->storePubliclyAs($destination, $image, 'public');
 				
 				$blog->poster = $image;
 			}

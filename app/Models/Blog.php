@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+use Illuminate\Support\Str;
+
 class Blog extends Model
 {
 	use HasFactory, SoftDeletes;
@@ -27,12 +29,29 @@ class Blog extends Model
 		'deleted_at' => 'datetime',
 	];
 
+	protected $with = [
+		'user'
+	];
+
 	// Relationship Function
-	protected function user() { return $this->belongsTo('App\User', 'author', 'user_id'); }
+	public function user() { return $this->belongsTo('App\Models\User', 'author'); }
 	protected function blogContentImages() { return $this->hasMany('App\Models\AnnouncementContentImage', 'blog_id', 'id'); }
 
 	// Custom Functions
 	public function getPoster() {
 		return asset('storage/uploads/blogs/'.$this->slug.'/'.$this->poster);
+	}
+
+	public function getLifetime() {
+		$now = now();
+		$createdAt = $this->created_at;
+
+		$seconds = $now->diffInSeconds($createdAt);	if ($seconds < 60) return "{$seconds} " . Str::plural("second", $seconds);
+		$minutes = $now->diffInMinutes($createdAt);	if ($minutes < 60) return "{$minutes} " . Str::plural("minute", $minutes);
+		$hours = $now->diffInHours($createdAt);		if ($hours < 24) return "{$hours} " . Str::plural("hour", $hours);
+		$days = $now->diffInDays($createdAt);		if ($days < 7) return "{$days} " . Str::plural("day", $days);
+		$weeks = $now->diffInWeeks($createdAt);		if ($weeks < 4) return "{$weeks} " . Str::plural("week", $weeks);
+		$months = $now->diffInMonths($createdAt);	if ($months < 12) return "{$months} " . Str::plural("month", $months);
+		$years = $now->diffInYears($createdAt);		return "{$years} " . Str::plural("year", $years);
 	}
 }
