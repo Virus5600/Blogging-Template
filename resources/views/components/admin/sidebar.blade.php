@@ -7,7 +7,7 @@
 
 		{{-- Branding --}}
 		<a class="navbar-brand m-0 py-0 d-flex justify-content-center position-relative" href="{{route('admin.dashboard')}}" style="height: auto;">
-			<img src="{{ $settings['web_logo'] }}" style="max-height: 3.25rem;" class="m-0 p-0" alt="Smile Taytay Dashboard" data-fallback-img="{{ asset('uploads/departments/default.png') }}" />
+			<img src="{{ $settings['web_logo'] }}" style="max-height: 3.25rem;" class="m-0 p-0" alt="Website Logo" data-fallback-img="{{ asset('uploads/departments/default.png') }}" />
 			<span class="text-dark text-decoration-none text-wrap d-flex d-lg-none my-auto mx-2">{{ $settings['web_name'] }}</span>
 		</a>
 
