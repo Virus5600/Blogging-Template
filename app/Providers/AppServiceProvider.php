@@ -29,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
 
 		// Use https when on peoduction
 		if(config('app.env') === 'production' || config('app.env') === 'staging') {
-			URL::forceScheme('https');
+			URL::forceScheme(request()->header("X-Forwarded-Proto", "https"));
+			request()->server->set("HTTPS", request()->header("X-Forwarded-Proto", "https") == "https" ? "on" : "off");
 		}
 	}
 }
