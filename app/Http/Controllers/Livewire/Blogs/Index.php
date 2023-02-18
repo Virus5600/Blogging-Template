@@ -18,16 +18,30 @@ class Index extends Component
 
 	// Fields (models)
 	public $search = "";
+	public $dateSort = "latest";
+	public $pages = 10;
 
 	// Validation
-	protected $rules = ['search' => 'string|max:255'];
+	protected $rules = [
+		'search' => 'string|max:255',
+		'dateSort' => ["regex:/(latest)|(oldest)/"],
+		'pages' => 'numeric|min:10'
+	];
 
 	// Configurations
 	protected $paginationTheme = 'bootstrap';
 
 	// COMPONENT FUNCTION //
 	public function render() {
-		$validator = Validator::make(["search" => $this->search], $this->rules);
+		// Validation
+		$validator = Validator::make([
+				"search" => $this->search,
+				"dateSort" => $this->dateSort,
+				"pages" => $this->pages
+			],
+			$this->rules
+		);
+		$cleaned = $validator->validate();
 
 		if ($validator->fails()) {
 			Log::debug($validator->messages());
@@ -39,7 +53,7 @@ class Index extends Component
 		}
 		$this->resetPage('blogsPage');
 
-		$search = "%{$this->search}%";
+		$search = "%{$cleaned['search']}%";
 		$searchQuery = function($query) use ($search) {
 			return $query->where("title", "LIKE", $search)
 				->orWhere("summary", "LIKE", $search);
@@ -48,7 +62,8 @@ class Index extends Component
 		$blogs = Blog::select(['title', 'summary', 'author', 'slug', 'poster', 'created_at'])
 			->where('is_draft', '=', 0)
 			->where($searchQuery)
-			->paginate(10, ["*"], 'blogsPage');
+			->{$cleaned['dateSort'] ?: 'latest'}()
+			->paginate((int) $cleaned['pages'] ?: 10, ["*"], 'blogsPage');
 
 		return view('livewire.blogs.index', [
 			'blogs' => $blogs

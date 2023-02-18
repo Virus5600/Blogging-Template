@@ -122,4 +122,72 @@ class Index extends Component
 			'flash_success' => "Successfully drafted \"{$blog->title}\""
 		]);
 	}
+
+	public function delete($id) {
+		$blog = Blog::withTrashed()
+			->find($id);
+
+		if ($blog == null) {
+			$this->dispatchBrowserEvent('flash_error', [
+				'flash_error' => "The blog either does not exists or is already deleted"
+			]);
+
+			return;
+		}
+
+		try {
+			DB::beginTransaction();
+
+			$blog->delete();
+			$blog->save();
+
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+			Log::error($e);
+
+			$this->dispatchBrowserEvent('flash_error', [
+				'flash_error' => "Something went wrong, please try again later"
+			]);
+			return;
+		}
+
+		$this->dispatchBrowserEvent('flash_success', [
+			'flash_success' => "Successfully trashed \"{$blog->title}\""
+		]);
+	}
+
+	public function restore($id) {
+		$blog = Blog::withTrashed()
+			->find($id);
+
+		if ($blog == null) {
+			$this->dispatchBrowserEvent('flash_error', [
+				'flash_error' => "The blog either does not exists or is already deleted"
+			]);
+
+			return;
+		}
+
+		try {
+			DB::beginTransaction();
+
+			$blog->restore();
+			$blog->save();
+
+			DB::commit();
+		} catch (Exception $e) {
+			DB::rollback();
+			Log::error($e);
+
+			$this->dispatchBrowserEvent('flash_error', [
+				'flash_error' => "Something went wrong, please try again later"
+			]);
+			return;
+		}
+
+		$this->dispatchBrowserEvent('flash_success', [
+			'flash_success' => "Successfully restored \"{$blog->title}\""
+		]);
+	}
 }

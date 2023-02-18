@@ -26,7 +26,7 @@
 						<p>{{ $b->summary }}</p>
 
 						<div class="input-group justify-content-end">
-							<a href="{{-- route("", [$b->slug]) --}}" class="btn btn-light mx-1">Read More...</a>
+							<a href="{{ route("blogs.show", [$b->slug]) }}" class="btn btn-light mx-1">Read More...</a>
 							<div class="dropdown mx-1">
 								<button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
 									<i class="fas fa-share-from-square mr-2"></i>Share

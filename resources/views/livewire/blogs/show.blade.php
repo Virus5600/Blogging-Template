@@ -48,7 +48,7 @@
 			<hr class="hr-thick">
 
 			@foreach ($otherBlogs as $b)
-			<a href="{{ route('blogs.show', [$b->slug]) }}" class="position-relative d-flex flex-column m-3 border rounded">
+			<a href="{{ route('blogs.show', [$b->slug, $b->id]) }}" class="position-relative d-flex flex-column m-3 border rounded">
 				<div class="d-flex rounded">
 					<img src="{{ $b->getPoster() }}" alt="Poster for {{ $b->title }}" class="img img-fluid mx-auto" style="max-height: 12.5rem;">
 				</div>

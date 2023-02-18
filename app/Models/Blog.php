@@ -30,12 +30,13 @@ class Blog extends Model
 	];
 
 	protected $with = [
-		'user'
+		'user',
+		'blogContentImages'
 	];
 
 	// Relationship Function
 	public function user() { return $this->belongsTo('App\Models\User', 'author'); }
-	protected function blogContentImages() { return $this->hasMany('App\Models\AnnouncementContentImage', 'blog_id', 'id'); }
+	public function blogContentImages() { return $this->hasMany('App\Models\BlogContentImage', 'blog_id', 'id'); }
 
 	// Custom Functions
 	public function getPoster() {
@@ -46,8 +47,8 @@ class Blog extends Model
 		$now = now();
 		$createdAt = $this->created_at;
 
-		$seconds = $now->diffInSeconds($createdAt);	if ($seconds < 60) return "{$seconds} " . Str::plural("second", $seconds);
-		$minutes = $now->diffInMinutes($createdAt);	if ($minutes < 60) return "{$minutes} " . Str::plural("minute", $minutes);
+		$seconds = $now->diffInSeconds($createdAt);	if ($seconds < 60) return "{$seconds} " . Str::plural("sec", $seconds);
+		$minutes = $now->diffInMinutes($createdAt);	if ($minutes < 60) return "{$minutes} " . Str::plural("min", $minutes);
 		$hours = $now->diffInHours($createdAt);		if ($hours < 24) return "{$hours} " . Str::plural("hour", $hours);
 		$days = $now->diffInDays($createdAt);		if ($days < 7) return "{$days} " . Str::plural("day", $days);
 		$weeks = $now->diffInWeeks($createdAt);		if ($weeks < 4) return "{$weeks} " . Str::plural("week", $weeks);

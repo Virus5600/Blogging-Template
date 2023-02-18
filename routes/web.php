@@ -43,6 +43,13 @@ Route::group(['prefix' => 'admin'], function() {
 			Route::get('/', Livewire\Admin\Blogs\Index::class)->name('admin.blogs.index');
 			// Create
 			Route::get('/create', Livewire\Admin\Blogs\Create::class)->name('admin.blogs.create');
+
+			Route::group(['prefix' => '{slug}'], function() {
+				// Show
+				Route::get('/', Livewire\Admin\Blogs\Show::class)->name('admin.blogs.show');
+				// Edit
+				Route::get('/edit', Livewire\Admin\Blogs\Edit::class)->name('admin.blogs.edit');
+			});
 		});
 	});
 });

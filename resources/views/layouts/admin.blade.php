@@ -102,7 +102,7 @@ $user = Auth::user();
 			</main>
 
 			<!-- SCRIPTS -->
-			<script type="text/javascript">const fiFallbackImage = '{{ asset("uploads/users/default.png") }}';</script>
+			<script type="text/javascript">const fiFallbackImage = '{{ asset("storage/uploads/users/default.png") }}';</script>
 			<script type="text/javascript" src="{{ asset('js/admin.js') }}"></script>
 			<script type="text/javascript" src="{{ asset('js/util/fallback-image.js') }}"></script>
 			<script type="text/javascript" src="{{ asset('js/util/livewire-swal.js') }}"></script>

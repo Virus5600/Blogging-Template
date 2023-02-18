@@ -44,7 +44,7 @@
 						@forelse ($blogs as $b)
 						<tr class="enlarge-on-hover">
 							<td class="text-center align-middle">
-								<img src="{{ $b->getPoster() }}" class="img img-fluid" style="max-height: 2.5rem;">
+								<img src="{{ $b->getPoster() }}" class="img img-fluid" style="max-height: 2.5rem;" data-fallback-img="{{ asset("storage/uploads/blogs/default.png") }}">
 							</td>
 
 							<td class="text-center align-middle font-weight-bold">{{ $b->title }}</td>
@@ -66,9 +66,14 @@
 								<div class="dropdown">
 									<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Actions</button>
 									
-									<div class="dropdown-menu">
+									<div class="dropdown-menu dropdown-menu-right">
+										{{-- SHOW --}}
+										<a href="{{ route('admin.blogs.show', [$b->slug]) }}" class="dropdown-item">
+											<i class="fas fa-eye mr-2"></i>View
+										</a>
+
 										{{-- EDIT --}}
-										<a href="#" class="dropdown-item">
+										<a href="{{ route('admin.blogs.edit', [$b->slug]) }}" class="dropdown-item">
 											<i class="fas fa-pencil mr-2"></i>Edit
 										</a>
 										
@@ -85,11 +90,11 @@
 										
 										{{-- DELETE --}}
 										@if ($b->trashed())
-										<a href="javascript:void(0);" class="dropdown-item">
+										<a href="javascript:void(0);" class="dropdown-item" wire:click="restore({{ $b->id }})">
 											<i class="fas fa-recycle mr-2"></i>Restore
 										</a>
 										@else
-										<a href="javascript:void(0);" class="dropdown-item">
+										<a href="javascript:void(0);" class="dropdown-item" wire:click="delete({{ $b->id }})">
 											<i class="fas fa-trash mr-2"></i>Delete
 										</a>
 										@endif

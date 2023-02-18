@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Livewire\Admin\Blogs;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Str;
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -62,7 +64,7 @@ class Create extends Component
 			"summary" => $this->summary,
 			"poster" => $this->poster,
 			"content" => $this->content,
-			"is_draft" => $this->is_draft
+			"is_draft" => $this->is_draft ? true : false
 		], $this->rules, $this->messages);
 
 		if ($validator->fails()) {
@@ -73,7 +75,7 @@ class Create extends Component
 		try {
 			DB::beginTransaction();
 
-			$slug = strtolower(preg_replace('/(\s+)|([.,\!\?\*\|\(\)\[\]\{\}@#\$\%\^\&\+=])/', '-', $this->title));
+			$slug = Str::slug($this->title) . "-" . time();
 
 			// Blog content is to follow and thus, a placeholder will be used.
 			$blog = Blog::create([
@@ -81,7 +83,7 @@ class Create extends Component
 				'summary' => $this->summary,
 				'slug' => $slug,
 				'content' => "<p><div class='spinner-border mr-2' role='status'></div>Processing...</p>",
-				'is_draft' => $this->is_draft,
+				'is_draft' => $this->is_draft ? true : false,
 				'author' => Auth::user()->id
 			]);
 
@@ -109,7 +111,7 @@ class Create extends Component
 				$image = str_replace($replace, '', $i->getAttribute('src'));
 				$image_name = $slug . '-content_image-' . uniqid() . '.' . $extension;
 
-				Storage::disk('public')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image));
+				Storage::disk('public')->put("/uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image), 'public');
 
 				BlogContentImage::create([
 					'blog_id' => $blog->id,
@@ -117,9 +119,9 @@ class Create extends Component
 				]);
 
 				$i->removeAttribute('src');
-				$i->setAttribute('src', asset("/uploads/blogs/{$slug}/content/{$image_name}"));
+				$i->setAttribute('src', asset("/storage/uploads/blogs/{$slug}/content/{$image_name}"));
 				$i->setAttribute('data-filename', $image_name);
-				$i->setAttribute('data-fallback-image', asset('/uploads/announcements/default.png'));
+				$i->setAttribute('data-fallback-image', asset('/storage/uploads/announcements/default.png'));
 			}
 
 			$blog->content = $dom->saveHTML();
