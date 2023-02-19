@@ -21,6 +21,6 @@ class BlogContentImage extends Model
 
 	// Custom Function
 	public function getImage() {
-		return Storage::disk('s3')->temporaryUrl('uploads/blogs/'.$this->blog->slug.'/content/'.$this->image_name, now()->addMinutes(5));
+		return Storage::disk('s3')->url('uploads/blogs/'.$this->blog->slug.'/content/'.$this->image_name);
 	}
 }
