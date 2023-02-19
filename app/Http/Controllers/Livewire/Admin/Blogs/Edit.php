@@ -165,7 +165,7 @@ class Edit extends Component
 					$image = str_replace($replace, '', $i->getAttribute('src'));
 					$image_name = $slug . '-content_image-' . uniqid() . '.' . $extension;
 
-					Storage::disk('s3')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image));
+					Storage::disk('s3')->storePublicly("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image));
 					
 					BlogContentImage::create([
 						'blog_id' => $blog->id,

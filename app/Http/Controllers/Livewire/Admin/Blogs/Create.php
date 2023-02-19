@@ -38,16 +38,16 @@ class Create extends Component
 
 	protected $messages = [
 		'title.required' => 'Title is required',
-		'title.string' => 'Invalid input',
+		'title.string' => 'Invalid instorePublicly',
 		'title.max' => 'Exceeded character count',
-		'summary.string' => 'Invalid input',
+		'summary.string' => 'Invalid instorePublicly',
 		'summary.max' => 'Exceeded character count',
 		'poster.image' => 'Poster should be an image file (jpg, jpeg, png, bmp, gif, svg, or webp)',
 		'poster.max' => 'Maximum file size is 10MB',
 		'content.required' => 'Content is required',
-		'content.string' => 'Invalid input',
+		'content.string' => 'Invalid instorePublicly',
 		'content.max' => 'Exceeded character count',
-		'is_draft.boolean' => 'Invalid input'
+		'is_draft.boolean' => 'Invalid instorePublicly'
 	];
 
 	// COMPONENT FUNCTION //
@@ -92,7 +92,7 @@ class Create extends Component
 				$destination = "uploads/blogs/{$slug}";
 				$fileType = $this->poster->getClientOriginalExtension();
 				$image = "{$slug}-" . uniqid() . ".{$fileType}";
-				$this->poster->storeAs($destination, $image, 's3');
+				$this->poster->storePublicly($destination, $image, 's3');
 				
 				$blog->poster = $image;
 			}
@@ -111,7 +111,7 @@ class Create extends Component
 				$image = str_replace($replace, '', $i->getAttribute('src'));
 				$image_name = $slug . '-content_image-' . uniqid() . '.' . $extension;
 
-				Storage::disk('s3')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image));
+				Storage::disk('s3')->storePublicly("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image));
 
 				BlogContentImage::create([
 					'blog_id' => $blog->id,

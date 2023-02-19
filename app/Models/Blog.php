@@ -42,7 +42,7 @@ class Blog extends Model
 
 	// Custom Functions
 	public function getPoster() {
-		return Storage::disk('s3')->url('uploads/blogs/'.$this->slug.'/'.$this->poster);
+		return Storage::disk('s3')->temporaryUrl('uploads/blogs/'.$this->slug.'/'.$this->poster, now()->addMinutes(5));
 	}
 
 	public function getLifetime() {
