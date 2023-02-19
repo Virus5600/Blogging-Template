@@ -167,15 +167,15 @@ class Edit extends Component
 
 					Storage::disk('s3')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image), 'public');
 					
-					BlogContentImage::create([
+					$ci = BlogContentImage::create([
 						'blog_id' => $blog->id,
 						'image_name' => $image_name
 					]);
 					
 					$i->removeAttribute('src');
-					$i->setAttribute('src', Storage::disk('s3')->url("uploads/blogs/{$slug}/content/{$image_name}"));
-					$i->setAttribute('data-filename', $image_name);
-					$i->setAttribute('data-fallback-image', Storage::disk('s3')->url('uploads/blogs/default.png'));
+					$i->setAttribute('src', $ci->getImage());
+					$i->setAttribute('data-filename', $ci->image_name);
+					$i->setAttribute('data-fallback-image', asset('/storage/uploads/blogs/default.png'));
 					array_push($keptImages, $image_name);
 				}
 				else {
