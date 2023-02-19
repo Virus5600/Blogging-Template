@@ -33,19 +33,19 @@
 								</button>
 
 								<div class="dropdown-menu dropdown-menu-right">
-									<button class="dropdown-item" type="button" data-social-type="facebook" data-social-share="{{ "google.com" }}">
+									<button class="dropdown-item" type="button" data-social-type="facebook" data-social-share="{{ route("blogs.show", [$b->slug]) }}">
 										<i class="fab fa-facebook mr-2"></i>Facebook
 									</button>
 									
-									<button class="dropdown-item" type="button" data-social-type="twitter" data-social-share="{{ "google.com" }}">
+									<button class="dropdown-item" type="button" data-social-type="twitter" data-social-share="{{ route("blogs.show", [$b->slug]) }}">
 										<i class="fab fa-twitter mr-2"></i>Twitter
 									</button>
 
-									<button class="dropdown-item" type="button" data-social-type="whatsapp" data-social-share="{{ "google.com" }}">
+									<button class="dropdown-item" type="button" data-social-type="whatsapp" data-social-share="{{ route("blogs.show", [$b->slug]) }}">
 										<i class="fab fa-whatsapp mr-2"></i>WhatsApp
 									</button>
 									
-									<button class="dropdown-item" type="button" data-copy-text="{{ route("blogs.index", [$b->slug]) }}">
+									<button class="dropdown-item" type="button" data-copy-text="{{ route("blogs.show", [$b->slug]) }}">
 										<i class="fas fa-link mr-2"></i>Copy Link
 									</button>
 								</div>
