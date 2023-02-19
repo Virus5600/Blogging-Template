@@ -111,7 +111,7 @@ class Create extends Component
 				$image = str_replace($replace, '', $i->getAttribute('src'));
 				$image_name = $slug . '-content_image-' . uniqid() . '.' . $extension;
 
-				Storage::disk('s3')->putFileAs("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image), 'public');
+				Storage::disk('s3')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image), 'public');
 
 				BlogContentImage::create([
 					'blog_id' => $blog->id,
