@@ -92,7 +92,7 @@ class Create extends Component
 				$destination = "uploads/blogs/{$slug}";
 				$fileType = $this->poster->getClientOriginalExtension();
 				$image = "{$slug}-" . uniqid() . ".{$fileType}";
-				$this->poster->storePubliclyAs($destination, $image, 's3');
+				$this->poster->storeAs($destination, $image, 's3');
 				
 				$blog->poster = $image;
 			}

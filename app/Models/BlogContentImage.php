@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Storage;
+
 class BlogContentImage extends Model
 {
 	use HasFactory;
@@ -19,6 +21,6 @@ class BlogContentImage extends Model
 
 	// Custom Function
 	public function getImage() {
-		return asset('storage/uploads/blogs/'.$this->blog->slug.'/content/'.$this->image_name);
+		return Storage::disk('s3')->url('uploads/blogs/'.$this->blog->slug.'/content/'.$this->image_name);
 	}
 }

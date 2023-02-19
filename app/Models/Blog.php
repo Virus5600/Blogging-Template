@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Support\Str;
 
+use Storage;
+
 class Blog extends Model
 {
 	use HasFactory, SoftDeletes;
@@ -40,7 +42,7 @@ class Blog extends Model
 
 	// Custom Functions
 	public function getPoster() {
-		return asset('storage/uploads/blogs/'.$this->slug.'/'.$this->poster);
+		return Storage::disk('s3')->url('uploads/blogs/'.$this->slug.'/'.$this->poster);
 	}
 
 	public function getLifetime() {
