@@ -53,7 +53,7 @@ $settings = [
 		<link rel="mask-icon" href="{{ $settings['web_logo'] }}">
 
 		{{-- TITLE --}}
-		<title>User Login - Municipality of Taytay, Rizal</title>
+		<title>{{ $settings['web_name'] }} | User Login</title>
 	</head>
 
 	<body>
