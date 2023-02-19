@@ -92,7 +92,7 @@ class Create extends Component
 				$destination = "uploads/blogs/{$slug}";
 				$fileType = $this->poster->getClientOriginalExtension();
 				$image = "{$slug}-" . uniqid() . ".{$fileType}";
-				$this->poster->storePubliclyAs($destination, $image, 'public');
+				$this->poster->storePubliclyAs($destination, $image, 's3');
 				
 				$blog->poster = $image;
 			}
@@ -111,7 +111,7 @@ class Create extends Component
 				$image = str_replace($replace, '', $i->getAttribute('src'));
 				$image_name = $slug . '-content_image-' . uniqid() . '.' . $extension;
 
-				Storage::disk('public')->put("/uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image), 'public');
+				Storage::disk('s3')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image));
 
 				BlogContentImage::create([
 					'blog_id' => $blog->id,

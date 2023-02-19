@@ -120,8 +120,8 @@ class Edit extends Component
 				$oldPosterName = $blog->poster;
 				$newPosterName = str_replace($blog->slug, $slug, $blog->poster);
 
-				Storage::disk('public')->move("uploads/blogs/{$blog->slug}/", "uploads/blogs/{$slug}/");
-				Storage::disk('public')->move("uploads/blogs/{$slug}/{$blog->poster}", "uploads/blogs/{$slug}/{$newPosterName}/");
+				Storage::disk('s3')->move("uploads/blogs/{$blog->slug}/", "uploads/blogs/{$slug}/");
+				Storage::disk('s3')->move("uploads/blogs/{$slug}/{$blog->poster}", "uploads/blogs/{$slug}/{$newPosterName}/");
 			}
 			else {
 				$slug = $blog->slug;
@@ -138,9 +138,9 @@ class Edit extends Component
 				$destination = "uploads/blogs/{$slug}";
 				$fileType = $this->poster->getClientOriginalExtension();
 				$image = "{$slug}-" . uniqid() . ".{$fileType}";
-				$this->poster->storePubliclyAs($destination, $image, 'public');
+				$this->poster->storePubliclyAs($destination, $image, 's3');
 				
-				File::delete(public_path() . "/storage/uploads/blogs/{$slug}/". ($moveAllFiles ? $newPosterName : $blog->poster));
+				Storage::disk("s3")->delete("uploads/blogs/{$slug}/". ($moveAllFiles ? $newPosterName : $blog->poster));
 				$blog->poster = $image;
 			}
 
@@ -165,7 +165,7 @@ class Edit extends Component
 					$image = str_replace($replace, '', $i->getAttribute('src'));
 					$image_name = $slug . '-content_image-' . uniqid() . '.' . $extension;
 
-					Storage::disk('public')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image), 'public');
+					Storage::disk('s3')->put("uploads/blogs/{$slug}/content/{$image_name}", base64_decode($image));
 					
 					BlogContentImage::create([
 						'blog_id' => $blog->id,
@@ -173,9 +173,9 @@ class Edit extends Component
 					]);
 					
 					$i->removeAttribute('src');
-					$i->setAttribute('src', asset("/storage/uploads/blogs/{$slug}/content/{$image_name}"));
+					$i->setAttribute('src', Storage::disk('s3')->url("uploads/blogs/{$slug}/content/{$image_name}"));
 					$i->setAttribute('data-filename', $image_name);
-					$i->setAttribute('data-fallback-image', asset('/storage/uploads/blogs/default.png'));
+					$i->setAttribute('data-fallback-image', Storage::disk('s3')->url('uploads/blogs/default.png'));
 					array_push($keptImages, $image_name);
 				}
 				else {
@@ -194,7 +194,7 @@ class Edit extends Component
 						$ci->save();
 
 						// For the file update
-						Storage::disk('public')->move("uploads/blogs/{$blog->slug}content/{$image_name}", "uploads/blogs/{$slug}/content/{$replacementName}");
+						Storage::disk('s3')->move("uploads/blogs/{$blog->slug}content/{$image_name}", "uploads/blogs/{$slug}/content/{$replacementName}");
 
 						// For the Summernote content update
 						$i->removeAttribute('src');
@@ -212,7 +212,7 @@ class Edit extends Component
 					$image_name = $ci->image_name;
 					$ci->delete();
 
-					File::delete(public_path() . "/storage/uploads/blogs/{$slug}/content/{$image_name}");
+					Storage::disk("s3")->delete("uploads/blogs/{$slug}/content/{$image_name}");
 				}
 			}
 
