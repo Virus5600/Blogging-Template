@@ -1,3 +1,4 @@
+var livewireComponent;
 $(document).ready(() => {
 	$(document).on('click', '.change-password', (e) => {
 		let obj = $(e.currentTarget);
@@ -28,7 +29,27 @@ $(document).ready(() => {
 			console.error("Swal Change Password cannot proceed:", "targetURI missing");
 			return;
 		}
+		if (typeof data.isLivewire == 'undefined')
+			data.usLivewire = false;
 
+		if (data.isLivewire) {
+			if (typeof data.livewireComponent == 'undefined') {
+				Swal.fire({
+					title: `Something went wrong, please contact the Webmaster to fix the error`,
+					position: `top`,
+					showConfirmButton: false,
+					toast: true,
+					background: `#dc3545`,
+					customClass: {
+						title: `text-white`,
+						content: `text-white`,
+						popup: `px-3`
+					},
+				});
+				console.error("Swal Change Password cannot proceed:", "No livewire component provided.");
+				return;
+			}
+		}
 
 		if (data.preventDefault)
 			e.preventDefault();
@@ -102,58 +123,81 @@ $(document).ready(() => {
 			}
 		}).then((response) => {
 			if (response.isConfirmed) {
-				$.ajaxSetup({
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					}
-				});
+				// IF LIVEWIRE
+				if (data.isLivewire) {
+					const excess = "window.livewire.";
 
-				$.post(data.targetURI, {
-					_token: $('meta[name="csrf-token"]').attr('content'),
-					password: response.value.password,
-					password_confirmation: response.value.confirm_password,
-					notify_user: response.value.notify
-				}).done((dataR) => {
-					if (dataR.type == 'validation_error') {
-						obj.attr('data-scp', JSON.stringify(data)).trigger('click');
-						Swal.showValidationMessage(dataR.message);
-					}
-					else if (dataR.type == 'missing' || dataR.type == 'error') {
-						Swal.fire({
-							title: `${dataR.message}`,
-							position: `top`,
-							showConfirmButton: false,
-							toast: true,
-							timer: 10000,
-							background: `#dc3545`,
-							customClass: {
-								title: `text-white`,
-								content: `text-white`,
-								popup: `px-3`
-							},
-						});
+					let livewireComponent = data.livewireComponent;
+					let livewireFn = livewireComponent.substr(excess.length, livewireComponent.indexOf("(") - excess.length);
+					let livewireId = livewireComponent.substr(
+						livewireComponent.indexOf("(") + 2,
+						(livewireComponent.indexOf(")") - 1) - (livewireComponent.indexOf("(") + 2)
+					);
 
-						if (dataR.type == 'missing')
-							$(data.for).remove();
-					}
-					else if (dataR.type == 'success') {
-						Swal.fire({
-							title: `${dataR.message}`,
-							position: `top`,
-							showConfirmButton: false,
-							toast: true,
-							timer: 10000,
-							background: `#28a745`,
-							customClass: {
-								title: `text-white`,
-								content: `text-white`,
-								popup: `px-3`
-							},
-						});
-					}
-				}).fail((response) => {
-					console.log(response);
-				});
+					livewireComponent = livewire[livewireFn](livewireId);
+
+					livewireComponent.set("password", response.value.password);
+					livewireComponent.set("password_confirmation", response.value.confirm_password);
+					livewireComponent.set("notify_user", response.value.notify);
+
+					let params = data.targetURI.split(/,\s*/g);
+					livewireComponent.call.apply(this, params);
+				}
+				// IF NOT LIVEWIRE
+				else {
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						}
+					});
+
+					$.post(data.targetURI, {
+						_token: $('meta[name="csrf-token"]').attr('content'),
+						password: response.value.password,
+						password_confirmation: response.value.confirm_password,
+						notify_user: response.value.notify
+					}).done((dataR) => {
+						if (dataR.type == 'validation_error') {
+							obj.attr('data-scp', JSON.stringify(data)).trigger('click');
+							Swal.showValidationMessage(dataR.message);
+						}
+						else if (dataR.type == 'missing' || dataR.type == 'error') {
+							Swal.fire({
+								title: `${dataR.message}`,
+								position: `top`,
+								showConfirmButton: false,
+								toast: true,
+								timer: 10000,
+								background: `#dc3545`,
+								customClass: {
+									title: `text-white`,
+									content: `text-white`,
+									popup: `px-3`
+								},
+							});
+
+							if (dataR.type == 'missing')
+								$(data.for).remove();
+						}
+						else if (dataR.type == 'success') {
+							Swal.fire({
+								title: `${dataR.message}`,
+								position: `top`,
+								showConfirmButton: false,
+								toast: true,
+								timer: 10000,
+								background: `#28a745`,
+								customClass: {
+									title: `text-white`,
+									content: `text-white`,
+									popup: `px-3`
+								},
+							});
+						}
+					}).fail((response) => {
+						console.log(response);
+					});
+				}
 			}
 		});
 	});

@@ -12,11 +12,9 @@ use Livewire\WithFileUploads;
 use App\Models\Blog;
 use App\Models\BlogContentImage;
 
-use Auth;
 use DB;
 use DOMDocument;
 use Exception;
-use File;
 use Log;
 use Storage;
 use Validator;

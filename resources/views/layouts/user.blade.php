@@ -124,6 +124,7 @@ $settings = [
 						popup: `px-3`
 					},
 				});
+				@php(session()->forget('flash_error'))
 				@elseif (Session::has('flash_info'))
 				Swal.fire({
 					{!! Session::has('has_icon') ? "icon: `info`," : "" !!}
@@ -140,6 +141,7 @@ $settings = [
 						popup: `px-3`
 					},
 				});
+				@php(session()->forget('flash_info'))
 				@elseif (Session::has('flash_success'))
 				Swal.fire({
 					{!! Session::has('has_icon') ? "icon: `success`," : "" !!}
@@ -156,6 +158,7 @@ $settings = [
 						popup: `px-3`
 					},
 				});
+				@php(session()->forget('flash_success'))
 				@endif
 			</script>
 			@yield('scripts')

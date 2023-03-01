@@ -21,7 +21,7 @@ function swapImgFile(obj) {
 	else {
 		targetImgContainer.on('error', (e) => {
 			targetImgContainer.attr("src", targetImgContainer.attr('data-default-src'));
-			targetNameContainer.html(targetNameContainer.attr ('data-default-name'));
+			targetNameContainer.html(targetNameContainer.attr('data-default-name'));
 		});
 	}
 }

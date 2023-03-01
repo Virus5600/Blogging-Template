@@ -2,7 +2,8 @@
 $settings = [
 	'web_name' => App\Models\Settings::getValue('web_name'),
 	'web_desc' => App\Models\Settings::getValue('web_desc'),
-	'web_logo' => App\Models\Settings::getInstance('web_logo')->getImage()
+	'web_logo' => App\Models\Settings::getInstance('web_logo')->getImage(),
+	'default-avatar' => App\Models\User::getDefaultAvatar()
 ];
 $user = Auth::user();
 @endphp
@@ -102,7 +103,7 @@ $user = Auth::user();
 			</main>
 
 			<!-- SCRIPTS -->
-			<script type="text/javascript">const fiFallbackImage = '{{ asset("storage/uploads/users/default.png") }}';</script>
+			<script type="text/javascript">const fiFallbackImage = '{{ $settings["default-avatar"] }}';</script>
 			<script type="text/javascript" src="{{ asset('js/admin.js') }}"></script>
 			<script type="text/javascript" src="{{ asset('js/util/fallback-image.js') }}"></script>
 			<script type="text/javascript" src="{{ asset('js/util/livewire-swal.js') }}"></script>

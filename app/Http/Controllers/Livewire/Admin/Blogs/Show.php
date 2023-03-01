@@ -24,7 +24,7 @@ class Show extends Component
 			session()->flash('has_icon', true);
 			session()->flash('flash_info', "Blog either does not exists or is already deleted");
 
-			$this->redirectRoute('blogs.admin.index');
+			$this->redirectRoute('admin.blogs.index');
 		}
 
 		return view('livewire.admin.blogs.show', [

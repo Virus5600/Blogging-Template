@@ -12,7 +12,6 @@ use Livewire\WithFileUploads;
 use App\Models\Blog;
 use App\Models\BlogContentImage;
 
-use Auth;
 use DB;
 use DOMDocument;
 use Exception;
@@ -84,7 +83,7 @@ class Create extends Component
 				'slug' => $slug,
 				'content' => "<p><div class='spinner-border mr-2' role='status'></div>Processing...</p>",
 				'is_draft' => $this->is_draft ? true : false,
-				'author' => Auth::user()->id
+				'author' => auth()->ser()->id
 			]);
 
 			// File handling

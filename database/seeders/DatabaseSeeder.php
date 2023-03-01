@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
 			SettingsTableSeeder::class,
 			UsersTableSeeder::class,
 			CarouselsTableSeeder::class,
+			BlogsTableSeeder::class,
+			BlogContentImagesTableSeeder::class,
 		]);
 	}
 }

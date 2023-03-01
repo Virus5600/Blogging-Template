@@ -1,26 +1,22 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
 // Bootstrap 4
-@import "node_modules/bootstrap/dist/css/bootstrap.min";
-@import "node_modules/bootstrap-select/dist/css/bootstrap-select.min";
+@use "node_modules/bootstrap/dist/css/bootstrap.min";
+@use "node_modules/bootstrap-select/dist/css/bootstrap-select.min";
 
 // Sweetalert 2
-@import "node_modules/sweetalert2/dist/sweetalert2.min";
+@use "node_modules/sweetalert2/dist/sweetalert2.min";
 
 // Slick Carousel
-@import "node_modules/slick-carousel/slick/slick";
-@import "node_modules/slick-carousel/slick/slick-theme";
+@use "node_modules/slick-carousel/slick/slick";
+@use "node_modules/slick-carousel/slick/slick-theme";
 
 // Fontawesome 6
-@import "node_modules/@fortawesome/fontawesome-free/css/svg-with-js.min";
+@use "node_modules/@fortawesome/fontawesome-free/css/svg-with-js.min";
 
 // Summernote
-@import "node_modules/summernote/dist/summernote-lite.min";
+@use "node_modules/summernote/dist/summernote-lite.min";
 
 // Animate.css
-@import "node_modules/animate.css/animate.min";
+@use "node_modules/animate.css/animate.min";
 
 .note-modal-footer {
 	height: auto;

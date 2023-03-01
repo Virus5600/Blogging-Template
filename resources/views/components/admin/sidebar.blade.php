@@ -45,6 +45,17 @@
 
 		<hr class="w-100 custom-hr">
 
+		{{-- USER --}}
+		@if (request()->is('admin/users'))
+		<span class="bg-secondary text-white"><i class="fas fa-users mr-2"></i>Users</span>
+		@elseif (request()->is('admin/users/*'))
+		<a class="text-decoration-none aria-link bg-secondary text-white" href="{{ route('admin.users.index') }}" aria-hidden="false" aria-label="Users"><i class="fas fa-users mr-2"></i>Users</a>
+		@else
+		<a class="text-decoration-none aria-link text-dark" href="{{ route('admin.users.index') }}" aria-hidden="false" aria-label="Users"><i class="fas fa-users mr-2"></i>Users</a>
+		@endif
+
+		<hr class="w-100 custom-hr">
+
 		{{-- LOGOUT --}}
 		<a class="text-decoration-none aria-link text-dark" href="{{ route('logout') }}" aria-hidden="false" aria-label="Logout"><i class="fas fa-sign-out-alt mr-2"></i>Sign Out</a>
 	</div>

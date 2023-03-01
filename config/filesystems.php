@@ -54,6 +54,7 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => true,
+            'scheme' => env('APP_ENV') == 'local' ? 'http' : 'https', // to disable SSL verification on local development
         ],
 
     ],
