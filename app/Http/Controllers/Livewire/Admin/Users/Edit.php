@@ -159,7 +159,7 @@ class Edit extends Component
 				// Change format to WEBP
 				if(strtolower($fileType) != "webp") {
 					$webpImage = Image::make($this->avatar)->stream("webp", 100);
-					Storage::put("{$destination}/{$image}", $webpImage, 'public');
+					Storage::disk('s3')->put("{$destination}/{$image}", $webpImage, 'public');
 				}
 				else {
 					$this->avatar->storePubliclyAs($destination, $image, 's3');
