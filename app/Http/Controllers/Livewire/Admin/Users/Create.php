@@ -130,7 +130,7 @@ class Create extends Component
 					Storage::disk("s3")->put("{$destination}/{$image}", $webpImage, 'public');
 				}
 				else {
-					$this->avatar->storePubliclyAs($destination, $image, 'public');
+					$this->avatar->storePubliclyAs($destination, $image, 's3');
 				}
 				
 				$user->avatar = $image;
