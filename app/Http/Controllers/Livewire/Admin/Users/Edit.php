@@ -44,8 +44,8 @@ class Edit extends Component
 			'birthdate' => array('required', 'date', 'before:' . now()->format("Y-m-d")),
 			'email' => array('required', 'email', 'string', 'max:255', Rule::unique('users', 'email')->ignore($id)),
 			'avatar' => array('max:5120', 'mimes:jpeg,jpg,png,webp', 'nullable'),
-		);
 			'username' => array('required', 'string', 'min:3', 'max:255', Rule::unique('users', 'username')->ignore($id)),
+		);
 	}
 
 	protected $messages = [
