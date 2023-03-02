@@ -25,10 +25,11 @@ class Edit extends Component
 {
 	use WithFileUploads;
 
-	use WithFileUploads;
-
 	// Fields (models)
 	public $first_name, $middle_name, $last_name, $suffix, $birthdate, $email, $avatar, $username, $password;
+
+	// Holder fields
+	public $currentUsername;
 
 	// Single Initialization Variables
 	protected $settings;
@@ -41,9 +42,9 @@ class Edit extends Component
 			'last_name' => array('required', 'string', 'max:255'),
 			'suffix' => array('nullable', 'string', 'max:255'),
 			'birthdate' => array('required', 'date', 'before:' . now()->format("Y-m-d")),
-			'email' => array('required', 'email', 'string', 'max:255', Rule::unique('users,email')->ignore($id)),
+			'email' => array('required', 'email', 'string', 'max:255', Rule::unique('users', 'email')->ignore($id)),
 			'avatar' => array('max:5120', 'mimes:jpeg,jpg,png,webp', 'nullable'),
-			'username' => array('required', 'string', 'min:3', 'max:255', Rule::unique('users,username')->ignore($id)),
+			'username' => array('required', 'string', 'min:3', 'max:255', Rule::unique('users', 'username')->ignore($id)),
 		);
 	}
 
@@ -77,6 +78,8 @@ class Edit extends Component
 
 	// COMPONENT FUNCTION //
 	public function mount($username) {
+		$this->currentUsername = $username;
+		
 		$user = User::withTrashed()
 			->where('username', '=', $username)
 			->first();
@@ -100,7 +103,7 @@ class Edit extends Component
 	// FORM FUNCTIONS //
 	public function update(Request $req) {
 		$user = User::withTrashed()
-			->where('username', '=', $username)
+			->where('username', '=', $this->currentUsername)
 			->first();
 
 		if ($user == null) {
@@ -159,7 +162,7 @@ class Edit extends Component
 					Storage::put("{$destination}/{$image}", $webpImage, 'public');
 				}
 				else {
-					$this->avatar->storePubliclyAs($destination, $image, 'public');
+					$this->avatar->storePubliclyAs($destination, $image, 's3');
 				}
 				
 				$user->avatar = $image;
@@ -185,6 +188,6 @@ class Edit extends Component
 
 		return redirect()
 			->route('admin.users.index')
-			->with('flash_success', "Successfully created a new user");
+			->with('flash_success', "Successfully updated @{$user->username}");
 	}
 }
