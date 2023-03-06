@@ -53,11 +53,11 @@ class User extends Authenticatable
 	protected function birthdate() : Attribute {
 		try {
 			return Attribute::make(
-				get: fn($value) => Carbon::createFromFormat('Y-m-d', $value)->format('M d, Y')
+				get: fn($value) => Carbon::parse( $value)->format('M d, Y')
 			);
 		} catch (Exception $e) {
 			return Attribute::make(
-				get: fn($value) => Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('M d, Y')
+				get: fn($value) => Carbon::parse($value)->format('M d, Y')
 			);
 		}
 	}
@@ -65,11 +65,11 @@ class User extends Authenticatable
 	protected function lastAuth() : Attribute {
 		try {
 			return Attribute::make(
-				get: fn($value) => Carbon::createFromFormat('Y-m-d', $value)->format('M d, Y h:i A')
+				get: fn($value) => Carbon::parse( $value)->format('M d, Y h:i A')
 			);
 		} catch (Exception $e) {
 			return Attribute::make(
-				get: fn($value) => Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('M d, Y h:i A')
+				get: fn($value) => Carbon::parse($value)->format('M d, Y h:i A')
 			);
 		}
 	}
@@ -77,11 +77,11 @@ class User extends Authenticatable
 	protected function updatedAt() : Attribute {
 		try {
 			return Attribute::make(
-				get: fn($value) => Carbon::createFromFormat('Y-m-d H:i:s', $value)->format('M d, Y')
+				get: fn($value) => Carbon::parse($value)->format('M d, Y')
 			);
 		} catch (Exception $e) {
 			return Attribute::make(
-				get: fn($value) => Carbon::createFromFormat('Y-m-d', $value)->format('M d, Y')
+				get: fn($value) => Carbon::parse($value)->format('M d, Y')
 			);
 		}
 	}
