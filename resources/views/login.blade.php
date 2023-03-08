@@ -25,26 +25,40 @@ $settings = [
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content="{{ $settings['web_name'] }}">
 		<meta name="twitter:description" content="{{ $settings['web_desc'] }}">
-		<meta name="twitter:image" content="{{asset('/images/meta-banner.jpg')}}">
+		<meta name="twitter:image" content="{{ asset('/images/meta-banner.jpg') }}">
 
 		{{-- OG META --}}
-		<meta name="og:url" content="{{Request::url()}}">
+		<meta name="og:url" content="{{ Request::url() }}">
 		<meta name="og:type" content="website">
 		<meta name="og:title" content="{{ $settings['web_name'] }}">
 		<meta name="og:description" content="{{ $settings['web_desc'] }}">
-		<meta name="og:image" content="{{asset('/images/meta-banner.jpg')}}">
+		<meta name="og:image" content="{{ asset('/images/meta-banner.jpg') }}">
+
+		@php
+		$nonceKey = "";
+		$nonceKeyRaw = "nonce";
+		$steps = rand(5, 10);
+
+		foreach (str_split($nonceKeyRaw) as $v)
+			$nonceKey .= chr(ord($v) + $steps);
+		@endphp
+		<meta name="nce" content="{{ csp_nonce() }}" key="{{ $nonceKey }}" value="{{ $steps }}">
 
 		{{-- CSS --}}
-		@livewireStyles
-		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/layouts/general.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/libs.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/login.css') }}" rel="stylesheet">
 
 		{{-- JQUERY / SWEETALERT 2 / SLICK CAROUSEL --}}
-		<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/libs.js') }}"></script>
+
+		{{-- LIVEWIRE --}}
+		@livewireStyles(['nonce' => csp_nonce()])
+		@livewireScripts(['nonce' => csp_nonce()])
 
 		{{-- Removes the code that shows up when script is disabled/not allowed/blocked --}}
-		<script type="text/javascript" id="for-js-disabled-js">$('head').append('<style id="for-js-disabled">#js-disabled { display: none; }</style>');$(document).ready(function() {$('#js-disabled').remove();$('#for-js-disabled').remove();$('#for-js-disabled-js').remove();});</script>
+		<script type="text/javascript" id="for-js-disabled-js" nonce="{{ csp_nonce() }}">$('head').append('<style id="for-js-disabled" nonce={{ csp_nonce() }}>#js-disabled { display: none; }</style>');$(document).ready(function() {$('#js-disabled').remove();$('#for-js-disabled').remove();$('#for-js-disabled-js').remove();});</script>
 
 		{{-- FAVICON --}}
 		<link rel="icon" href="{{ $settings['web_logo'] }}">
@@ -58,13 +72,22 @@ $settings = [
 
 	<body>
 		{{-- SHOWS THIS INSTEAD WHEN JAVASCRIPT IS DISABLED --}}
-		<div style="position: absolute; height: 100vh; width: 100vw; background-color: #ccc;" id="js-disabled">
-			<style type="text/css">
+		{{-- SHOWS THIS INSTEAD WHEN JAVASCRIPT IS DISABLED --}}
+		<div id="js-disabled">
+			<style type="text/css" nonce="{{ csp_nonce() }}">
+				#js-disabled {
+					position: absolute;
+					height: 100vh;
+					width: 100vw;
+					background-color: #ccc;
+				}
+
 				/* Make the element disappear if JavaScript isn't allowed */
 				.js-only {
 					display: none!important;
 				}
 			</style>
+
 			<div class="row h-100">
 				<div class="col-12 col-md-4 offset-md-4 py-5 my-auto">
 					<div class="card shadow my-auto">
@@ -87,7 +110,6 @@ $settings = [
 			</main>
 
 			<!-- SCRIPTS -->
-			@livewireScripts
 			<script type="text/javascript" src="{{ asset('js/util/password-visibility-toggler.js') }}"></script>
 			<script type="text/javascript" src="{{ asset('js/util/livewire-swal.js') }}"></script>
 		</div>

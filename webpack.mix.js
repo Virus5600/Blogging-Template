@@ -1,6 +1,17 @@
 const mix = require('laravel-mix');
 const path = require('path');
 
+const paths = {
+	js: {
+		base: `resources/js`
+	},
+	sass: {
+		base: `resources/sass`,
+		app: `resources/sass/app`,
+		layouts: `resources/sass/app/layouts`
+	}
+};
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -21,7 +32,10 @@ mix.webpackConfig({
 		},
 		devtool: 'inline-source-map'
 	})
-	.js('resources/js/app.js', 'public/js')
-	.sass('resources/sass/app.scss', 'public/css')
+	.js(`${paths.js.base}/libs.js`, 'public/js')
+	.sass(`${paths.sass.base}/libs.scss`, 'public/css')
+	// APP RELATED STYLESHEETS
+	.sass(`${paths.sass.app}/components.scss`, 'public/css')
+	.sass(`${paths.sass.layouts}/general.scss`, 'public/css/layouts')
 	.sourceMaps()
 	.disableNotifications();

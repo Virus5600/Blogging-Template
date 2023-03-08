@@ -1,7 +1,7 @@
 <!-- TOPBAR -->
 <nav class="navbar navbar-expand-md navbar-light navbar-sticky topbar dark-shadow justify-content-between py-0" id="topbarWrapper">
 	<a class="navbar-brand text-center d-flex flex-row w-75 w-lg-auto" href="{{ route('index') }}" title="{{ $settings['web_name'] }}">
-		<img src="{{ $settings['web_logo'] }}" alt="Branding" style="height: 3rem;" class="my-auto">
+		<img src="{{ $settings['web_logo'] }}" alt="Branding" class="my-auto branding">
 		<h5 class="text-dark text-decoration-none my-auto mx-2 font-weight-bold text-wrap">{{ $settings['web_name'] }}</h5>
 	</a>
 

@@ -1,51 +1,66 @@
+@php
+$settings = [
+	'web_name' => App\Models\Settings::getValue('web_name'),
+	'web_desc' => App\Models\Settings::getValue('web_desc'),
+	'web_logo' => App\Models\Settings::getInstance('web_logo')->getImage()
+];
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		{{-- META DATA --}}
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="{{ env('APP_DESC') }}">
 
 		{{-- SITE META --}}
 		<meta name="type" content="website">
-		<meta name="title" content="{{ env('APP_NAME') }}">
-		<meta name="description" content="{{ env('APP_DESC') }}">
+		<meta name="title" content="{{ $settings['web_name'] }}">
+		<meta name="description" content="{{ $settings['web_desc'] }}">
 		<meta name="image" content="{{ asset('images/meta-banner.jpg') }}">
 		<meta name="keywords" content="{{ env('APP_KEYW') }}">
-		<meta name="application-name" content="{{ env('APP_NAME') }}">
+		<meta name="application-name" content="{{ $settings['web_name'] }}">
 
 		{{-- TWITTER META --}}
 		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:title" content="{{ env('APP_NAME') }}">
-		<meta name="twitter:description" content="{{ env('APP_DESC') }}">
-		<meta name="twitter:image" content="{{asset('/images/meta-banner.jpg')}}">
+		<meta name="twitter:title" content="{{ $settings['web_name'] }}">
+		<meta name="twitter:description" content="{{ $settings['web_desc'] }}">
+		<meta name="twitter:image" content="{{ asset('/images/meta-banner.jpg') }}">
 
 		{{-- OG META --}}
-		<meta name="og:url" content="{{Request::url()}}">
+		<meta name="og:url" content="{{ Request::url() }}">
 		<meta name="og:type" content="website">
-		<meta name="og:title" content="{{ env('APP_NAME') }}">
-		<meta name="og:description" content="{{ env('APP_DESC') }}">
-		<meta name="og:image" content="{{asset('/images/meta-banner.jpg')}}">
+		<meta name="og:title" content="{{ $settings['web_name'] }}">
+		<meta name="og:description" content="{{ $settings['web_desc'] }}">
+		<meta name="og:image" content="{{ asset('/images/meta-banner.jpg') }}">
+
+		@cspMetaTag(App\Policies\Base::class)
 
 		{{-- CSS --}}
-		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/libs.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/layouts/general.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
 		{{-- JQUERY / SWEETALERT 2 / SLICK CAROUSEL / FONTAWESOME 6 --}}
-		<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/libs.js') }}"></script>
+
+		{{-- FAVICON --}}
+		<link rel="icon" href="{{ $settings['web_logo'] }}">
+		<link rel="shortcut icon" href="{{ $settings['web_logo'] }}">
+		<link rel="apple-touch-icon" href="{{ $settings['web_logo'] }}">
+		<link rel="mask-icon" href="{{ $settings['web_logo'] }}">
 
 		{{-- Title --}}
-		<title>Internal Server Error - Municipality of Taytay, Rizal</title>
+		<title>{{ $settings['web_name'] }} | Internal Server Error</title>
 	</head>
 	
-	<body style="height: 100vh;">
-		<div class="container-fluid d-flex flex-d-col" style="height: -webkit-fill-available;">
+	<body>
+		<div class="container-fluid d-flex flex-d-col">
 			<div class="container-fluid my-auto mx-0 p-0">
 				<div class="row">
 					<div class="col-12 col-lg-6 offset-lg-3 text-center">
-						<i class="far fa-frown" style="height: 12.5rem"></i>
+						<i class="far fa-frown fa-10x"></i>
 					</div>
 				</div>
 

@@ -17,7 +17,7 @@ $settings = [
 				{{-- Header --}}
 				<div class="col-12">
 					<h1>
-						<a href="javascript:void(0);" onclick="confirmLeave('{{route('admin.users.index')}}');" class="text-dark text-decoration-none font-weight-normal">
+						<a href="#" data-confirm-leave="{{ route('admin.users.index') }}" class="text-dark text-decoration-none font-weight-normal">
 							<i class="fas fa-chevron-left mr-2"></i>Users
 						</a>
 					</h1>
@@ -137,7 +137,7 @@ $settings = [
 					<div class="row">
 						<div class="col-6 mx-auto ml-lg-auto d-flex flex-row">
 							<button class="btn btn-success ml-auto" type="button" id="submitButton">Submit</button>
-							<a href="javascript:void(0);" onclick="confirmLeave('{{route('admin.users.index')}}');" class="btn btn-danger ml-3 mr-auto">Cancel</a>
+							<button data-confirm-leave="{{route('admin.users.index')}}" class="btn btn-danger ml-3 mr-auto">Cancel</button>
 
 							<button class="d-none" type="hidden" id="actualSubmitButton" wire:click="create"></button>
 						</div>
@@ -158,7 +158,7 @@ $settings = [
 <script type="text/javascript" src="{{ asset('js/util/disable-on-submit.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/util/image-input.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/util/password-visibility-toggler.js') }}"></script>
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{ csp_nonce() }}">
 	$(document).ready(() => {
 		$(`#submitButton`).on(`click`, (e) => {
 			$(`#actualSubmitButton`).click();

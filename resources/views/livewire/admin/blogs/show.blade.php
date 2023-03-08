@@ -42,7 +42,7 @@
 					<img src="{{ $blog->getPoster() }}" alt="Poster for {{ $blog->title }}" class="img img-fluid" style="height: 12.5rem;" data-fallback-img="{{ asset('/storage/uploads/blogs/default.png') }}">
 				</div>
 				
-				<div class="card-body">
+				<div class="card-body text-wrap">
 					{!! $blog->content !!}
 				</div>
 
@@ -56,7 +56,3 @@
 		</div>
 	</div>
 </div>
-
-@section('css')
-@livewireStyles
-@endsection

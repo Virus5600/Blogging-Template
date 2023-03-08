@@ -11,7 +11,7 @@
 				{{-- Header --}}
 				<div class="col-12">
 					<h1>
-						<a href="javascript:void(0);" onclick="confirmLeave('{{ route('admin.blogs.index') }}');" class="text-dark text-decoration-none font-weight-normal">
+						<a href="#" data-confirm-leave="{{ route('admin.blogs.index') }}" class="text-dark text-decoration-none font-weight-normal">
 							<i class="fas fa-chevron-left mr-2"></i>Blogs
 						</a>
 					</h1>
@@ -89,7 +89,7 @@
 		<div class="row py-3">
 			<div class="col">
 				<button class="btn btn-success ml-auto" type="button" id="submitButton">Submit</button>
-				<a href="javascript:void(0);" onclick="confirmLeave('{{ route('admin.blogs.index') }}')" class="btn btn-danger ml-3 mr-auto">Cancel</a>
+				<button data-confirm-leave="{{ route('admin.blogs.index') }}" class="btn btn-danger ml-3 mr-auto">Cancel</a>
 				
 				<button class="d-none" type="hidden" id="actualSubmitButton" wire:click="create"></button>
 			</div>
@@ -100,7 +100,7 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/util/custom-switch.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('css/util/text-counter.css') }}" />
-<style type="text/css">
+<style type="text/css" nonce="{{ csp_nonce() }}">
 	.note-toolbar {
 		display: flex;
 		flex-wrap: wrap;
@@ -112,7 +112,7 @@
 @section('scripts')
 <script type="text/javascript" src="{{ asset('js/util/text-counter.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/util/confirm-leave.js') }}"></script>
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{ csp_nonce() }}">
 	/* Source: https://davidwalsh.name/javascript-debounce-function
 	 * Returns a function, that, as long as it continues to be invoked, will not
 	 * be triggered. The function will be called after it stops being called for

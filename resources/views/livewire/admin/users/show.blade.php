@@ -57,16 +57,15 @@
 </div>
 
 @section('css')
-@livewireStyles
 <link rel="stylesheet" type="text/css" href="{{ asset('css/components.css') }}">
 @endsection
 
-@section('scripts')
+@section('modals')
 <div id="avatar-modal" class="modal fade" tabindex="-1" aria-labelledby="avatar" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				<h5 class="modal-title" id="avatar">{{ $user->username }}'s Avatar</h5>
 				
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true"><i class="fas fa-times"></i></span>
@@ -74,6 +73,7 @@
 			</div>
 			
 			<div class="modal-body">
+				<img src="{{ $user->getAvatar() }}" alt="{{ $user->username }}'s avatar" class="img img-fluid" draggable="false">
 			</div>
 
 			<div class="modal-footer">

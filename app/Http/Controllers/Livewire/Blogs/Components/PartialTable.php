@@ -12,14 +12,6 @@ class PartialTable extends Component
 	protected $blogs;
 
 	// COMPONENT FUNCTION //
-	public function mount() {
-		$this->blogs = Blog::select(['title', 'summary', 'slug', 'poster'])
-			->where('is_draft', '=', 0)
-			->latest()
-			->take(3)
-			->get();
-	}
-
 	public function render() {
 		$this->blogs = Blog::select(['title', 'summary', 'slug', 'poster'])
 			->where('is_draft', '=', 0)

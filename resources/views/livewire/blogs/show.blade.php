@@ -1,6 +1,6 @@
 @section('title', "Blogs - {$blog->title}")
 
-<div class="row">
+<div class="row blogging show">
 	{{-- BREADCRUMBS --}}
 	<div class="col-12">
 		<nav aria-label="breadcrumb">
@@ -31,11 +31,11 @@
 				</div>
 			</div>
 
-			<div class="card-img card-img-top position-relative text-center my-3" style="max-height: 12.5rem;">
-				<img src="{{ $blog->getPoster() }}" alt="Poster for {{ $blog->title }}" class="img img-fluid" style="height: 12.5rem;">
+			<div class="card-img card-img-top position-relative text-center my-3">
+				<img src="{{ $blog->getPoster() }}" alt="Poster for {{ $blog->title }}" class="img img-fluid">
 			</div>
 			
-			<div class="card-body">
+			<div class="card-body text-wrap">
 				{!! $blog->content !!}
 			</div>
 		</div>
@@ -70,7 +70,3 @@
 		</div>
 	</div>
 </div>
-
-@section('css')
-@livewireStyles
-@endsection
