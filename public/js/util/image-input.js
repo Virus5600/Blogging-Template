@@ -16,7 +16,7 @@ function swapImgFile(obj) {
 
 		reader.readAsDataURL(obj.files[0]);
 
-		targetImgContainer.attr('onerror', `this.src="/uploads/users/default.png";$(this).removeAttr('onerror');`);
+		targetImgContainer.attr('onerror', `this.src="/storage/uploads/users/default.png";$(this).removeAttr('onerror');`);
 	}
 	else {
 		targetImgContainer.on('error', (e) => {
@@ -29,7 +29,7 @@ function swapImgFile(obj) {
 // Handles missing images for image-input
 $($('.image-input-scope input[type=file]').attr('data-target-image-container')).bind("error", function(e) {
 	let obj = $(e.currentTarget);
-	$(obj).attr("src", "/uploads/users/default.png");
+	$(obj).attr("src", "/storage/uploads/users/default.png");
 });
 
 $(document).ready(function() {

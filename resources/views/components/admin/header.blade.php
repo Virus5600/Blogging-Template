@@ -9,7 +9,7 @@
 
 			{{-- Navbar contents --}}
 			<div class="d-flex align-items-center ml-auto">
-				<img src="{{ $user->getAvatar() }}" class="circular-border" draggable='false' alt="{{ $user->getName() }}" style="height: 2.5rem;" data-fallback-img="{{ $user->getDefaultAvatar() }}"/>
+				<img src="{{ $user->getAvatar() }}" class="circular-border branding" draggable='false' alt="{{ $user->getName() }}" data-fallback-img="{{ $user->getDefaultAvatar() }}"/>
 				<label>
 					<div class="dropdown">
 						<a href='#' role="button" class="nav-link dropdown-toggle text-dark dynamic-size-lg-h6" style="font-size: 1.25rem;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

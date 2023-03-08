@@ -2,9 +2,19 @@
 const head = document.getElementsByTagName('head')[0];
 const img = document.getElementsByTagName('img');
 
-head.innerHTML = `
-	${head.innerHTML}
-	<style>
+let nceRaw = $(`meta[name=nce]`).attr('content');
+let key = $(`meta[name=nce]`).attr('key');
+let value = $(`meta[name=nce]`).attr('value');
+let nce = "";
+if (typeof nceRaw != 'undefined' && nceRaw.length > 0) {
+	for (let v of key)
+		nce += String.fromCharCode(v.charCodeAt(0) - value);
+
+	nce = ` ${nce}="${nceRaw}"`;
+}
+
+head.insertAdjacentHTML('beforeend', `
+	<style ${nce}>
 		@keyframes img-fallback-missing-pulse {
 			0% {
 				opacity: 0.125;
@@ -43,7 +53,7 @@ head.innerHTML = `
 			animation-iteration-count: infinite;
 		}
 	</style>
-`;
+`);
 
 let i = 1;
 Array.from(img).forEach((v) => {

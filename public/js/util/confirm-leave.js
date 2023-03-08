@@ -17,13 +17,21 @@ function confirmLeave(urlTo, title="Are you sure?", message = "You have unsave c
 		if (result.isConfirmed) {
 			if (isLivewire) {
 				try {
-					if (livewireComponent == undefined || livewireComponent == null)
+
+					if (typeof livewireComponent == 'undefined' || livewireComponent == null)
 						throw new Exception("");
 
 					let params = urlTo.split(/,\s*/g);
+
+					livewireComponent = livewireComponent.substr(livewireComponent.indexOf("'") + 1);
+					livewireComponent = livewireComponent.substr(0, livewireComponent.lastIndexOf("'"));
+					livewireComponent = window.livewire.find(livewireComponent);
+
 					livewireComponent.call.apply(this, params);
 				} catch (e) {
-					console.warning("Livewire not installed, using default method");
+					if (typeof livewireComponent == 'undefined' || livewireComponent == null)
+						console.warn("Livewire not installed, using default method");
+					console.table(e);
 					window.location.href = urlTo;
 				}
 			}
@@ -33,3 +41,22 @@ function confirmLeave(urlTo, title="Are you sure?", message = "You have unsave c
 		}
 	});
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+	document.addEventListener("click", function(e) {
+		if (e.target.hasAttribute("data-confirm-leave")) {
+			let obj = e.target;
+
+			let url = obj.getAttribute("data-confirm-leave");
+			let title = obj.getAttribute("data-confirm-leave-title");
+			let message = obj.getAttribute("data-confirm-leave-message");
+			let isLivewire = obj.hasAttribute("data-confirm-leave-livewire");
+			let livewireComponent = obj.getAttribute("data-confirm-leave-livewire");
+
+			title = title == null ? "Are you sure?" : title;
+			message = message == null ? "You have unsave changes." : message;
+			
+			confirmLeave(url, title, message, isLivewire, livewireComponent);
+		}
+	});
+});

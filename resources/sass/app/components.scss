@@ -1,0 +1,43 @@
+.note-modal-footer {
+	height: auto;
+	display: flex;
+
+	.note-btn {
+		float: none;
+		margin-left: auto;
+	}
+}
+
+.note-btn.dropdown-toggle::after {
+	display: none!important;
+}
+
+// ===== LIVEWIRE COMPONENTS ===== \\
+// Partial Table
+.blogging.partial-table img.img-thumbnail {
+	max-height: 10rem;
+}
+
+.blogging.show .card-img {
+	max-height: 12.5rem;
+
+	img {
+		height: 12.5rem;
+	}
+}
+
+// ===== LIBRARY EXTENSIONS ===== \\
+// Slick Carousel
+.carousel div.carousel-image-container {
+	max-height: 25rem;
+
+	.carousel-image {
+		max-height: 25rem;
+	}
+}
+
+// BS4.6 MODAL
+.modal,
+.modal-open {
+	padding: 0 !important;
+}

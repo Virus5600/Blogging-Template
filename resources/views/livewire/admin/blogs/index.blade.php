@@ -79,22 +79,22 @@
 										
 										{{-- DRAFT --}}
 										@if ($b->is_draft)
-										<a href="javascript:void(0);" class="dropdown-item" wire:click="publish({{ $b->id }})">
+										<button class="dropdown-item" wire:click="publish({{ $b->id }})">
 											<i class="fas fa-upload mr-2"></i>Publish
 										</a>
 										@else
-										<a href="javascript:void(0);" class="dropdown-item" wire:click="draft({{ $b->id }})">
+										<button class="dropdown-item" wire:click="draft({{ $b->id }})">
 											<i class="fas fa-note-sticky mr-2"></i>Draft
 										</a>
 										@endif
 										
 										{{-- DELETE --}}
 										@if ($b->trashed())
-										<a href="javascript:void(0);" class="dropdown-item" wire:click="restore({{ $b->id }})">
+										<button class="dropdown-item" wire:click="restore({{ $b->id }})">
 											<i class="fas fa-recycle mr-2"></i>Restore
 										</a>
 										@else
-										<a href="javascript:void(0);" class="dropdown-item" wire:click="delete({{ $b->id }})">
+										<button class="dropdown-item" wire:click="delete({{ $b->id }})">
 											<i class="fas fa-trash mr-2"></i>Delete
 										</a>
 										@endif

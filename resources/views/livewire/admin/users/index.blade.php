@@ -87,7 +87,7 @@
 										{{-- CHANGE PASSWORD --}}
 										<a href="javascript:void(0);" class="dropdown-item change-password" id="scp-{{ $u->id }}" data='{"preventDefault": true, "name": "{{ $u->getName() }}",}'>
 											<i class="fas fa-lock mr-2"></i>Change Password
-											<script type="text/javascript">
+											<script type="text/javascript" nonce="{{ csp_nonce() }}">
 												$(document).ready(() => {
 													let data = `{
 														"preventDefault": true,
@@ -108,11 +108,11 @@
 										{{-- STATUS --}}
 										@if ($u->id != 1)
 											@if ($u->trashed())
-											<a href="javascript:void(0);" class="dropdown-item" onclick="confirmLeave(`activate,{{ $u->username }}`, undefined, `{{ auth()->user()->id == $u->id ? "This will re-activate your account once more, allowing you to log back in using your account" : "This will re-activate the account once more, allowing the user to log back in using their account" }}`, true, @this);">
+											<button class="dropdown-item" data-confirm-leave="activate,{{ $u->username }}" data-confirm-leave-message="{{ auth()->user()->id == $u->id ? "This will re-activate your account once more, allowing you to log back in using your account" : "This will re-activate the account once more, allowing the user to log back in using their account" }}" data-confirm-leave-livewire="@this">
 												<i class="fas fa-toggle-on mr-2"></i>Re-Activate
 											</a>
 											@else
-											<a href="javascript:void(0);" class="dropdown-item" onclick="confirmLeave(`deactivate,{{ $u->username }}`, undefined, `{{ auth()->user()->id == $u->id ? "This will deactivate your account, logging you out forcibly and prevent you from accessing this account while deactivated" : "This will deactivate the account, logging them out forcibly on their next action and prevents them from accessing their account while deactivated" }}`, true, @this);">
+											<button class="dropdown-item" data-confirm-leave="deactivate,{{ $u->username }}" data-confirm-leave-message="{{ auth()->user()->id == $u->id ? "This will deactivate your account, logging you out forcibly and prevent you from accessing this account while deactivated" : "This will deactivate the account, logging them out forcibly on their next action and prevents them from accessing their account while deactivated" }}" data-confirm-leave-livewire="@this">
 												<i class="fas fa-toggle-off mr-2"></i>Deactivate
 											</a>
 											@endif

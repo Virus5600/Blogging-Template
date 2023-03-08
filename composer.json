@@ -13,11 +13,12 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "*",
-        "livewire/livewire": "^2.10",
-        "php-imap/php-imap": "^5.0"
+        "livewire/livewire": "^2.12",
+        "php-imap/php-imap": "^5.0",
+        "spatie/laravel-csp": "^2.8"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.7",
+        "barryvdh/laravel-debugbar": "^3.8",
         "beyondcode/laravel-query-detector": "^1.6",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",

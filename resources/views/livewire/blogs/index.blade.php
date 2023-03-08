@@ -69,11 +69,3 @@
 		</div>
 	</div>
 </div>
-
-@section('css')
-@livewireStyles
-@endsection
-
-@section('scripts')
-@livewireScripts
-@endsection

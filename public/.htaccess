@@ -3,6 +3,18 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    <IfModule mod_headers.c>
+        # REMOVES UNWANTED HEADERS
+        Header unset X-Powered-By
+        Header unset Server
+
+        # APPLY FLAGS TO HEADERS
+        Header always edit Set-Cookie (.*) "$1; HTTPOnly"
+
+        # SETS NEEDED HEADERS
+        Header set X-Content-Type-Options "nosniff"
+    </IfModule>
+
     RewriteEngine On
 
     # Handle Authorization Header

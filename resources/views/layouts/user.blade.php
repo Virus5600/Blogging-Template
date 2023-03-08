@@ -25,30 +25,46 @@ $settings = [
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content="{{ $settings['web_name'] }}">
 		<meta name="twitter:description" content="{{ $settings['web_desc'] }}">
-		<meta name="twitter:image" content="{{asset('/images/meta-banner.jpg')}}">
+		<meta name="twitter:image" content="{{ asset('/images/meta-banner.jpg') }}">
 
 		{{-- OG META --}}
-		<meta name="og:url" content="{{Request::url()}}">
+		<meta name="og:url" content="{{ Request::url() }}">
 		<meta name="og:type" content="website">
 		<meta name="og:title" content="{{ $settings['web_name'] }}">
 		<meta name="og:description" content="{{ $settings['web_desc'] }}">
-		<meta name="og:image" content="{{asset('/images/meta-banner.jpg')}}">
+		<meta name="og:image" content="{{ asset('/images/meta-banner.jpg') }}">
 
+		@php
+		$nonceKey = "";
+		$nonceKeyRaw = "nonce";
+		$steps = rand(5, 10);
+
+		foreach (str_split($nonceKeyRaw) as $v)
+			$nonceKey .= chr(ord($v) + $steps);
+		@endphp
+		<meta name="nce" content="{{ csp_nonce() }}" key="{{ $nonceKey }}" value="{{ $steps }}">
+		<meta name="google-site-verification" content="PC3vY_GjYNNn1jop6kc21d0UNt7LZBiGIR3CRESfM6g" />
 		@yield('meta')
 
 		{{-- CSS --}}
 		<link href="{{ asset('css/util/custom-scrollbar.css') }}" rel="stylesheet">
-		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/layouts/general.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/components.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/libs.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/user.css') }}" rel="stylesheet">
 
 		@yield('css')
 
 		{{-- JQUERY / SWEETALERT 2 / SLICK CAROUSEL / FONTAWESOME 6 --}}
-		<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/libs.js') }}" data-auto-add-css="false"></script>
+
+		{{-- LIVEWIRE --}}
+		@livewireStyles(['nonce' => csp_nonce()])
+		@livewireScripts(['nonce' => csp_nonce()])
 
 		{{-- Removes the code that shows up when script is disabled/not allowed/blocked --}}
-		<script type="text/javascript" id="for-js-disabled-js">$('head').append('<style id="for-js-disabled">#js-disabled { display: none; }</style>');$(document).ready(function() {$('#js-disabled').remove();$('#for-js-disabled').remove();$('#for-js-disabled-js').remove();});</script>
+		<script type="text/javascript" id="for-js-disabled-js" nonce="{{ csp_nonce() }}">$('head').append('<style id="for-js-disabled" nonce="{{ csp_nonce() }}">#js-disabled { display: none; }</style>');$(document).ready(function() {$('#js-disabled').remove();$('#for-js-disabled').remove();$('#for-js-disabled-js').remove();});</script>
 
 		{{-- FAVICON --}}
 		<link rel="icon" href="{{ $settings['web_logo'] }}">
@@ -60,15 +76,23 @@ $settings = [
 		<title>{{ $settings['web_name'] }} | @yield('title')</title>
 	</head>
 
-	<body class="custom-scrollbar" style="max-height: 100vh; heigh: 100vh;">
+	<body class="custom-scrollbar">
 		{{-- SHOWS THIS INSTEAD WHEN JAVASCRIPT IS DISABLED --}}
-		<div style="position: absolute; height: 100vh; width: 100vw; background-color: #ccc;" id="js-disabled">
-			<style type="text/css">
+		<div id="js-disabled">
+			<style type="text/css" nonce="{{ csp_nonce() }}">
+				#js-disabled {
+					position: absolute;
+					height: 100vh;
+					width: 100vw;
+					background-color: #ccc;
+				}
+
 				/* Make the element disappear if JavaScript isn't allowed */
 				.js-only {
 					display: none!important;
 				}
 			</style>
+
 			<div class="row h-100">
 				<div class="col-12 col-md-4 offset-md-4 py-5 my-auto">
 					<div class="card shadow my-auto">
@@ -86,7 +110,7 @@ $settings = [
 		<div class="d-flex flex-column min-vh-100 js-only">
 			<!-- HEADER -->
 			<header class="header dark-shadow">
-				<style type="text/css">:root { --carousel-arrow: url('{{ asset("images/settings/carousel/arrow.png") }}'); }</style>
+				<style type="text/css" nonce="{{ csp_nonce() }}">:root { --carousel-arrow: url('{{ asset("images/settings/carousel/arrow.png") }}'); }</style>
 				@include('components.user.header')
 			</header>
 
@@ -107,7 +131,7 @@ $settings = [
 			<!-- SCRIPTS -->
 			<script type="text/javascript" src="{{ asset("js/util/copy-to-clipboard.js") }}"></script>
 			<script type="text/javascript" src="{{ asset("js/util/social-share.js") }}"></script>
-			<script type="text/javascript">
+			<script type="text/javascript" nonce="{{ csp_nonce() }}">
 				@if (Session::has('flash_error'))
 				Swal.fire({
 					{!! Session::has('has_icon') ? "icon: `error`," : "" !!}
