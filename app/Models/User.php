@@ -113,6 +113,9 @@ class User extends Authenticatable
 				}
 			}
 
+			if(config('app.env') === 'production' || config('app.env') === 'staging')
+				$toRet = preg_replace("/(http(?!s))(.+)/", "$1s$2", $toRet);
+
 			return $toRet;
 		} catch (Exception $e) {
 			Log::error($e);
