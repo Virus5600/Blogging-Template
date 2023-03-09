@@ -45,7 +45,7 @@ class Blog extends Model
 		$uri = Storage::disk('s3')->url('uploads/blogs/'.$this->slug.'/'.$this->poster);
 
 		if(config('app.env') === 'production' || config('app.env') === 'staging')
-			$uri preg_replace("/(http(?!s))(.+)/", "$1s$2", $uri);
+			$uri = preg_replace("/(http(?!s))(.+)/", "$1s$2", $uri);
 
 		return $uri;
 	}
