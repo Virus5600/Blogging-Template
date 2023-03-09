@@ -34,8 +34,6 @@ $settings = [
 		<meta name="og:description" content="{{ $settings['web_desc'] }}">
 		<meta name="og:image" content="{{ asset('/images/meta-banner.jpg') }}">
 		
-		@cspMetaTag(App\Policies\Base::class)
-
 		{{-- CSS --}}
 		<link href="{{ asset('css/libs.css') }}" rel="stylesheet">
 		<link href="{{ asset('css/layouts/general.css') }}" rel="stylesheet">
