@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b83f4a8c4c4caab8c10f888a8246d5e8",
+    "content-hash": "3880ffa60a29845f15c450b76c48c3c1",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -149,84 +149,6 @@
                 "source": "https://github.com/aws/aws-sdk-php/tree/3.261.7"
             },
             "time": "2023-03-08T19:20:51+00:00"
-        },
-        {
-            "name": "bepsvpt/secure-headers",
-            "version": "7.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bepsvpt/secure-headers.git",
-                "reference": "639e99c72bdfe3d6f933f0a1e0abe1ca722e2e67"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bepsvpt/secure-headers/zipball/639e99c72bdfe3d6f933f0a1e0abe1ca722e2e67",
-                "reference": "639e99c72bdfe3d6f933f0a1e0abe1ca722e2e67",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "~2.29",
-                "ext-json": "*",
-                "ext-xdebug": "*",
-                "laravel/pint": "~1.4",
-                "orchestra/testbench": "~3.1 || ~4.18 || ~5.20 || ~6.25 || ~7.19 || ~8.0",
-                "phpstan/phpstan": "~1.9",
-                "phpunit/phpunit": "~5.7 || ~6.5 || ~7.5 || ~8.5 || ~9.5 || ~10.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Bepsvpt\\SecureHeaders\\SecureHeadersServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
-                "psr-4": {
-                    "Bepsvpt\\SecureHeaders\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "bepsvpt",
-                    "email": "og7lsrszah6y3lz@infinitefa.email"
-                }
-            ],
-            "description": "Add security related headers to HTTP response. The package includes Service Providers for easy Laravel integration.",
-            "homepage": "https://github.com/bepsvpt/secure-headers",
-            "keywords": [
-                "clear-site-data",
-                "content-security-policy",
-                "csp",
-                "except-ct",
-                "feature-policy",
-                "header",
-                "hsts",
-                "https",
-                "laravel",
-                "referrer-policy"
-            ],
-            "support": {
-                "issues": "https://github.com/bepsvpt/secure-headers/issues",
-                "source": "https://github.com/bepsvpt/secure-headers/tree/7.4.0"
-            },
-            "funding": [
-                {
-                    "url": "https://opencollective.com/secure-headers",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2023-02-06T13:24:48+00:00"
         },
         {
             "name": "brick/math",
