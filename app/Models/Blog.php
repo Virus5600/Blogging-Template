@@ -42,7 +42,12 @@ class Blog extends Model
 
 	// Custom Functions
 	public function getPoster() {
-		return Storage::disk('s3')->url('uploads/blogs/'.$this->slug.'/'.$this->poster);
+		$uri = Storage::disk('s3')->url('uploads/blogs/'.$this->slug.'/'.$this->poster);
+
+		if(config('app.env') === 'production' || config('app.env') === 'staging')
+			$uri preg_replace("/(http(?!s))(.+)/", "$1s$2", $uri);
+
+		return $uri;
 	}
 
 	public function getLifetime() {
