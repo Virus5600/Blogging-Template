@@ -14,7 +14,6 @@ $(document).ready(() => {
 			textToCopy = $(element).val();
 
 		temp.val(textToCopy).select();
-		console.log(textToCopy);
 		document.execCommand("copy");
 		temp.remove();
 		
