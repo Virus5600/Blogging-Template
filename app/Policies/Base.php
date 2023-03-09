@@ -16,18 +16,18 @@ class Base extends Policy
 			// BASIC DIRECTIVES
 			->addDirective(Directive::DEFAULT, Keyword::NONE)
 			->addDirective(Directive::BASE, Keyword::SELF)
-            ->addDirective(Directive::CONNECT, Keyword::SELF)
-            ->addDirective(Directive::DEFAULT, Keyword::SELF)
-            ->addDirective(Directive::FORM_ACTION, Keyword::SELF)
-            ->addDirective(Directive::IMG, Keyword::SELF)
-            ->addDirective(Directive::MEDIA, Keyword::SELF)
-            ->addDirective(Directive::OBJECT, Keyword::NONE)
-            ->addDirective(Directive::FONT, "self data:")
+			->addDirective(Directive::CONNECT, Keyword::SELF)
+			->addDirective(Directive::DEFAULT, Keyword::SELF)
+			->addDirective(Directive::FORM_ACTION, Keyword::SELF)
+			->addDirective(Directive::IMG, Keyword::SELF)
+			->addDirective(Directive::MEDIA, Keyword::SELF)
+			->addDirective(Directive::OBJECT, Keyword::NONE)
+			->addDirective(Directive::FONT, "self data:")
 
-            // FRAME DIRECTIVES
-            ->addDirective(Directive::FRAME_ANCESTORS, "self")
+			// FRAME DIRECTIVES
+			->addDirective(Directive::FRAME_ANCESTORS, "self")
 
-            // SCRIPTS AND STYLES
+			// SCRIPTS AND STYLES
 			->addDirective(Directive::SCRIPT, "self unsafe-eval")
 			->addDirective(Directive::SCRIPT_ELEM, "self")
 			->addDirective(Directive::STYLE, Keyword::UNSAFE_INLINE)
