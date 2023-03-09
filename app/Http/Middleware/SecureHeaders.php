@@ -22,23 +22,17 @@ class SecureHeaders
 	 * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
 	 */
 	public function handle(Request $request, Closure $next) {
-		$response = $next($request);
+		if (!headers_sent()) {
+			// SETTER
+			header('X-Content-Type-Options: nosniff');
+			header('X-XSS-Protection: 1; mode=block');
+			header('Strict-Transport-Security: max-age:31536000; includeSubDomains');
 
-		$response->headers->set('X-Content-Type-Options', 'nosniff');
-		$response->headers->set('X-XSS-Protection', '1; mode=block');
-		$response->headers->set('Strict-Transport-Security', 'max-age:31536000; includeSubDomains');
-		$this->removeUnwantedHeaders($this->unwantedHeaderList);
+			// REMOVER
+			foreach ($this->unwantedHeaderList as $header)
+				header_remove($header);
+		}
 		
-		return $response;
-	}
-
-	/**
-	 * Removes unwanted headers.
-	 * 
-	 * @param $headerList
-	 */
-	private function removeUnwantedHeaders($headerList) {
-		foreach ($headerList as $header)
-			header_remove($header);
+		return $next($request);
 	}
 }
