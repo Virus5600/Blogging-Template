@@ -17,6 +17,7 @@ class PartialTable extends Component
 			->where('is_draft', '=', 0)
 			->latest()
 			->take(3)
+			->without(['blogContentImages', 'user'])
 			->get();
 
 		return view('livewire.blogs.components.partial-table', [
