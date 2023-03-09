@@ -32,6 +32,10 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
+    # Rewrites all base URIs to /public folder
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ /public/$1 [L,QSA]
+
     # Sets PHP max post size
     <IfModule mod_php.c>
         php_value upload_max_filesize 32M
