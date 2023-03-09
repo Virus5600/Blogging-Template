@@ -22,7 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Spatie\Csp\AddCspHeaders::class,
-        \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
+        \App\Http\Middleware\SecureHeaders::class,
     ];
 
     /**
