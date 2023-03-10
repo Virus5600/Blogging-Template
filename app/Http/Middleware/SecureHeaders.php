@@ -18,9 +18,9 @@ class SecureHeaders
 
 	private $wantedHeaderList = [
 		'X-Frame-Options' => 'sameorigin',
-		'X-Content-Type-Options' => 'nosniff',
+		// 'X-Content-Type-Options' => 'nosniff',
 		'X-XSS-Protection' => '1; mode=block',
-		'Cache-Control' => 'public; max-age=31536000; immutable;',
+		// 'Cache-Control' => 'public; max-age=31536000; immutable;',
 	];
 
 	/**
