@@ -30,10 +30,11 @@ class User extends Authenticatable
 		'avatar',
 		'username',
 		'password',
+		'user_type_id',
 		'login_attempts',
 		'locked',
 		'locked_by',
-		'last_auth'
+		'last_auth',
 	];
 
 	protected $hidden = [
@@ -47,6 +48,11 @@ class User extends Authenticatable
 		'created_at' => 'date: M d, y',
 		'updated_at' => 'date: M d, y',
 		'deleted_at' => 'date: M d, y',
+	];
+
+	protected $with = [
+		'userType',
+		'userPerm'
 	];
 
 	// Accessor
@@ -86,7 +92,68 @@ class User extends Authenticatable
 		}
 	}
 
+	// Relationships (Buti pa model may relationship >_>)
+	public function userType() { return $this->belongsTo('App\Models\UserType'); }
+	public function userPerm() { return $this->hasMany('App\Models\UserPermission'); }
+	public function userPerms() { return $this->belongsToMany('App\Models\Permission', 'user_permissions'); }
+
 	// Custom Function
+	public function permissions() {
+		// dd($this);
+		if ($this->userPerm->count() <= 0)
+			$perms = $this->userType->permissions;
+
+		return $perms ?? $this->userPerm;
+	}
+
+	public function isUsingTypePermissions() {
+		return $this->userPerm->count() <= 0;
+	}
+
+	public function hasPermission(...$permissions) {
+		$matches = 0;
+		$usingTypePermissions = $this->isUsingTypePermissions();
+		$perms = $this->permissions();
+
+		if (is_array($permissions[0]))
+			$permissions = $permissions[0];
+
+		foreach ($perms as $p) {
+			if ($usingTypePermissions) {
+				if (in_array($p->slug, $permissions)) {
+					$matches += 1;
+				}
+			}
+			else {
+				if (in_array($p->permission->slug, $permissions)) {
+					$matches += 1;
+				}
+			}
+		}
+
+		return $matches == count($permissions);
+	}
+
+	public function hasSomePermission(...$permissions) {
+		$usingTypePermissions = $this->isUsingTypePermissions();
+		$perms = $this->permissions();
+
+		if (is_array($permissions[0]))
+			$permissions = $permissions[0];
+
+		foreach ($perms as $p) {
+			if ($usingTypePermissions) {
+				if (in_array($p->slug, $permissions)) {
+					return true;
+				}
+			}
+			else {
+				if (in_array($p->permission->slug, $permissions)) {
+					return true;
+				}
+			}
+		}
+	}
 	public function getAvatar($useDefault=false, $getFull=true) {
 		try {
 			$avatar = $this->avatar;
@@ -95,7 +162,7 @@ class User extends Authenticatable
 			$avatarD = User::getDefaultAvatar();
 			$toRet = null;
 
-			if ($useDefault) {
+			if ($useDefault || ($avatar == null)) {
 				if ($getFull)
 					return $avatarD;
 				else
@@ -119,7 +186,7 @@ class User extends Authenticatable
 			return $toRet;
 		} catch (Exception $e) {
 			Log::error($e);
-			return null;
+			return User::getDefaultAvatar();
 		}
 	}
 

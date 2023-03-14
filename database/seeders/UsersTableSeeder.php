@@ -26,6 +26,7 @@ class UsersTableSeeder extends Seeder
 			'avatar' => 'Code Senpai.png',
 			'username' => 'admin',
 			'password' => Hash::make('admin'),
+			'user_type_id' => 1
 		]);
 	}
 }

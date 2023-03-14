@@ -67,4 +67,24 @@ $(document).ready(() => {
 			objTarget.prop('disabled', false);
 		});
 	});
+
+	// Select Picker
+	$('select.selectpicker').selectpicker();
+
+	// Dropdown fix
+	$(document).on('show.bs.dropdown', '.enlarge-on-hover .dropdown', (e) => {
+		$(e.currentTarget).closest(".enlarge-on-hover").css("z-index", 1);
+	}).on('hide.bs.dropdown', '.enlarge-on-hover .dropdown', (e) => {
+		$(e.currentTarget).closest(".enlarge-on-hover").css("z-index", 0);
+	});
+	$('.enlarge-on-hover .dropdown').trigger('hide.bs.dropdown');
+
+	$(document).on('show.bs.dropdown', '.enlarge-on-hover .dropdown', function(e) {
+		var dropdown = $(e.target).find('.dropdown-menu');
+
+			dropdown.appendTo('body');
+		$(this).on('hidden.bs.dropdown', function () {
+			dropdown.appendTo(e.target);
+		});
+	});
 });

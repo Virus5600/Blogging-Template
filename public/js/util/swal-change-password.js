@@ -55,7 +55,7 @@ $(document).ready(() => {
 			e.preventDefault();
 
 		html = `
-		<div class="row">
+		<div class="row mx-0">
 			<div class="col-12 my-2">
 				<label class="form-label d-none" for="password">Password</label>
 				<div class="input-group">

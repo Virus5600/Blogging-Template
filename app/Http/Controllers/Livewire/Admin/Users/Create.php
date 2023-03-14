@@ -10,6 +10,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 
 use App\Models\User;
+use App\Models\UserType;
 
 use DB;
 use Exception;
@@ -23,10 +24,7 @@ class Create extends Component
 	use WithFileUploads;
 
 	// Fields (models)
-	public $first_name, $middle_name, $last_name, $suffix, $birthdate, $email, $avatar, $username, $password;
-
-	// Single Initialization Variables
-	protected $settings;
+	public $first_name, $middle_name, $last_name, $suffix, $birthdate, $email, $avatar, $username, $password, $userType;
 
 	// Validation
 	protected function rules() {
@@ -76,16 +74,25 @@ class Create extends Component
 	];
 
 	// COMPONENT FUNCTION //
-	public function render() {
+	public function mount() {
 		$this->password = str_shuffle(Str::random(25) . str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT));
+	}
 
-		return view('livewire.admin.users.create')
+	public function render() {
+		$types = UserType::select(['id', 'name', 'authority_level'])
+			->without(['permissions'])
+			->get();
+
+		return view('livewire.admin.users.create', [
+			'types' => $types
+		])
 			->extends('layouts.admin')
 			->section('content');
 	}
 
 	// FORM FUNCTIONS //
 	public function create(Request $req) {
+		$this->resetValidation();
 		$validator = Validator::make([
 			"first_name" => $this->first_name,
 			"middle_name" => $this->middle_name,
@@ -95,8 +102,30 @@ class Create extends Component
 			"email" => $this->email,
 			"avatar" => $this->avatar,
 			"username" => $this->username,
-			"password" => $this->password
+			"password" => $this->password,
+			"userType" => $this->userType
 		], $this->rules(), $this->messages);
+
+		$userType = $this->userType;
+		$validator->after(function($validator) {
+			$typeTarget = UserType::withTrashed()
+				->find($this->userType);
+
+			if ($typeTarget == null) {
+				$msg = "User type does not exists";
+				
+				$validator->errors()->add("userType", $msg);
+				$this->addError("userType", $msg);
+			}
+			else {
+				if ($typeTarget->authority_level < auth()->user()->userType->authority_level) {
+					$msg = "You have low authority level to set someone else higher than yours";
+					
+					$validator->errors()->add("userType", $msg);
+					$this->addError("userType", $msg);
+				}
+			}
+		});
 
 		if ($validator->fails()) {
 			$validator->validate();
@@ -115,7 +144,8 @@ class Create extends Component
 				"birthdate" => $this->birthdate,
 				"email" => $this->email,
 				"username" => $this->username,
-				"password" => bcrypt($this->password)
+				"password" => bcrypt($this->password),
+				"user_type_id" => $this->userType
 			]);
 
 			// File handling

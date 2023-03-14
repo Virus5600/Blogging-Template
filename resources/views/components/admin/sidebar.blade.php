@@ -1,3 +1,15 @@
+@php
+$user = auth()->user();
+$authLvl = $user->userType->authority_level;
+$isOwner = $authLvl == 1;
+
+$blogsAllow = $user->hasPermission('blogs_tab_access');
+$videosAllow = $user->hasPermission('videos_tab_access');
+$aboutAllow = $user->hasPermission('about_tab_access');
+
+$usersAllow = $user->hasPermission('users_tab_access');
+@endphp
+
 <div class="sidebar collapse-vertical d-flex flex-row dark-shadow position-absolute position-lg-sticky sticky-top w-100 w-lg-auto" style="overflow: hidden;" id="sidebar" aria-expanded="false">
 	{{-- Navigation Bar (SIDE) --}}
 	<div class="sidebar-content w-100 dark-shadow custom-scroll d-flex flex-column pb-3 py-lg-3 px-0 overflow-y-auto bg-white">
@@ -23,35 +35,43 @@
 		@endif
 
 		{{-- BLOGS --}}
-		@if (request()->is('admin/blogs'))
-		<span class="bg-secondary text-white"><i class="fas fa-comment mr-2"></i>Blogs</span>
-		@elseif (request()->is('admin/blogs/*'))
-		<a class="text-decoration-none aria-link bg-secondary text-white" href="{{ route('admin.blogs.index') }}" aria-hidden="false" aria-label="Blogs"><i class="fas fa-comment mr-2"></i>Blogs</a>
-		@else
-		<a class="text-decoration-none aria-link text-dark" href="{{ route('admin.blogs.index') }}" aria-hidden="false" aria-label="Blogs"><i class="fas fa-comment mr-2"></i>Blogs</a>
+		@if ($blogsAllow)
+			@if (request()->is('admin/blogs'))
+			<span class="bg-secondary text-white"><i class="fas fa-comment mr-2"></i>Blogs</span>
+			@elseif (request()->is('admin/blogs/*'))
+			<a class="text-decoration-none aria-link bg-secondary text-white" href="{{ route('admin.blogs.index') }}" aria-hidden="false" aria-label="Blogs"><i class="fas fa-comment mr-2"></i>Blogs</a>
+			@else
+			<a class="text-decoration-none aria-link text-dark" href="{{ route('admin.blogs.index') }}" aria-hidden="false" aria-label="Blogs"><i class="fas fa-comment mr-2"></i>Blogs</a>
+			@endif
 		@endif
 
 		{{-- VIDEOS --}}
-		@if (request()->is('admin/videos'))
-		@elseif (request()->is('admin/videos/*'))
-		@else
+		@if ($videosAllow)
+			@if (request()->is('admin/videos'))
+			@elseif (request()->is('admin/videos/*'))
+			@else
+			@endif
 		@endif
 
 		{{-- ABOUT ME --}}
-		@if (request()->is('admin/about-me'))
-		@elseif (request()->is('admin/about-me/*'))
-		@else
+		@if ($aboutAllow)
+			@if (request()->is('admin/about-me'))
+			@elseif (request()->is('admin/about-me/*'))
+			@else
+			@endif
 		@endif
 
 		<hr class="w-100 custom-hr">
 
 		{{-- USER --}}
-		@if (request()->is('admin/users'))
-		<span class="bg-secondary text-white"><i class="fas fa-users mr-2"></i>Users</span>
-		@elseif (request()->is('admin/users/*'))
-		<a class="text-decoration-none aria-link bg-secondary text-white" href="{{ route('admin.users.index') }}" aria-hidden="false" aria-label="Users"><i class="fas fa-users mr-2"></i>Users</a>
-		@else
-		<a class="text-decoration-none aria-link text-dark" href="{{ route('admin.users.index') }}" aria-hidden="false" aria-label="Users"><i class="fas fa-users mr-2"></i>Users</a>
+		@if ($usersAllow)
+			@if (request()->is('admin/users'))
+			<span class="bg-secondary text-white"><i class="fas fa-users mr-2"></i>Users</span>
+			@elseif (request()->is('admin/users/*'))
+			<a class="text-decoration-none aria-link bg-secondary text-white" href="{{ route('admin.users.index') }}" aria-hidden="false" aria-label="Users"><i class="fas fa-users mr-2"></i>Users</a>
+			@else
+			<a class="text-decoration-none aria-link text-dark" href="{{ route('admin.users.index') }}" aria-hidden="false" aria-label="Users"><i class="fas fa-users mr-2"></i>Users</a>
+			@endif
 		@endif
 
 		<hr class="w-100 custom-hr">
