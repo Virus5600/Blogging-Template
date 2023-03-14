@@ -129,9 +129,34 @@ $settings = [
 			</footer>
 
 			<!-- SCRIPTS -->
+			<script type="text/javascript" src="{{ asset('js/components/login-page.js') }}"></script>
 			<script type="text/javascript" src="{{ asset("js/util/copy-to-clipboard.js") }}"></script>
 			<script type="text/javascript" src="{{ asset("js/util/social-share.js") }}"></script>
 			<script type="text/javascript" nonce="{{ csp_nonce() }}">
+				Livewire.onPageExpired((response, message) => {
+					Swal.fire({
+						title: `This page has expired.`,
+						text: `Would you like to refresh the page?`,
+						showConfirmButton: true,
+						showDenyButton: true,
+						confirmButtonText: "Ok",
+						denyButtonText: "No thanks",
+						background: `#17a2b8`,
+						customClass: {
+							title: `text-white`,
+							htmlContainer: `text-white`,
+							content: `text-white`,
+							popup: `px-3`,
+							confirmButton: `btn btn-success px-3 mx-3	`,
+							denyButton: `btn btn-danger px-3 mx-3	`
+						},
+						buttonsStyling: false
+					}).then((r) => {
+						if (r.isConfirmed)
+							location.reload();
+					});
+				});
+				
 				@if (Session::has('flash_error'))
 				Swal.fire({
 					{!! Session::has('has_icon') ? "icon: `error`," : "" !!}

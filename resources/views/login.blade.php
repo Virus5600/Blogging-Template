@@ -43,6 +43,7 @@ $settings = [
 			$nonceKey .= chr(ord($v) + $steps);
 		@endphp
 		<meta name="nce" content="{{ csp_nonce() }}" key="{{ $nonceKey }}" value="{{ $steps }}">
+		<meta name="csrf_token" value="{{ csrf_token() }}"/>
 
 		{{-- CSS --}}
 		<link href="{{ asset('css/layouts/general.css') }}" rel="stylesheet">
@@ -71,7 +72,6 @@ $settings = [
 	</head>
 
 	<body>
-		{{-- SHOWS THIS INSTEAD WHEN JAVASCRIPT IS DISABLED --}}
 		{{-- SHOWS THIS INSTEAD WHEN JAVASCRIPT IS DISABLED --}}
 		<div id="js-disabled">
 			<style type="text/css" nonce="{{ csp_nonce() }}">
@@ -112,6 +112,31 @@ $settings = [
 			<!-- SCRIPTS -->
 			<script type="text/javascript" src="{{ asset('js/util/password-visibility-toggler.js') }}"></script>
 			<script type="text/javascript" src="{{ asset('js/util/livewire-swal.js') }}"></script>
+			<script nonce="{{ csp_nonce() }}">
+				Livewire.onPageExpired((response, message) => {
+					Swal.fire({
+						title: `This page has expired.`,
+						text: `Would you like to refresh the page?`,
+						showConfirmButton: true,
+						showDenyButton: true,
+						confirmButtonText: "Ok",
+						denyButtonText: "No thanks",
+						background: `#17a2b8`,
+						customClass: {
+							title: `text-white`,
+							htmlContainer: `text-white`,
+							content: `text-white`,
+							popup: `px-3`,
+							confirmButton: `btn btn-success px-3 mx-3	`,
+							denyButton: `btn btn-danger px-3 mx-3	`
+						},
+						buttonsStyling: false
+					}).then((r) => {
+						if (r.isConfirmed)
+							location.reload();
+					});
+				});
+			</script>
 		</div>
 	</body>
 </html>

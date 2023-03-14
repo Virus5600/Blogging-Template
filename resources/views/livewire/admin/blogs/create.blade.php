@@ -121,6 +121,7 @@
 	 */
 	const debounce = (func, wait, immediate) => {
 		var timeout;
+
 		return function() {
 			var context = this, args = arguments;
 			var later = function() {
@@ -170,16 +171,17 @@
 			},
 			callbacks: {
 				onChange: (content, editable) => {
-					debounce(function(content) {
+					let fn = debounce(function(content) {
 						@this.set('content', content);
 					}, 250);
+
+					fn(content);
 				}
 			}
 		});
 
 		$(`#submitButton`).on(`click`, (e) => {
 			let content = $(`textarea#content.summernote`);
-			@this.set('content', content.summernote('code'));
 			$(`#actualSubmitButton`).click();
 		});
 	});

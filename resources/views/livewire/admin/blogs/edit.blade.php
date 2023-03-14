@@ -170,16 +170,17 @@
 			},
 			callbacks: {
 				onChange: (content, editable) => {
-					debounce(function(content) {
+					let fn = debounce(function(content) {
 						@this.set('content', content);
-					}, 1000);
+					}, 250);
+
+					fn(content);
 				}
 			}
 		});
 
 		$(`#submitButton`).on(`click`, (e) => {
 			let content = $(`textarea#content.summernote`);
-			@this.set('content', content.summernote('code'));
 			$(`#actualSubmitButton`).click();
 		});
 	});

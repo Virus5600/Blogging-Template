@@ -214,6 +214,10 @@ class Edit extends Component
 				}
 			}
 
+			// Removes all the script tags within
+			foreach (iterator_to_array($dom->getElementsByTagName('script')) as $script)
+				$script->parentNode->removeChild("script");
+
 			$blog->slug = $slug;
 			$blog->content = $dom->saveHTML();
 			$blog->save();

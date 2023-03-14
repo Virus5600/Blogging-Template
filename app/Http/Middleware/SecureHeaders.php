@@ -18,9 +18,7 @@ class SecureHeaders
 
 	private $wantedHeaderList = [
 		'X-Frame-Options' => 'sameorigin',
-		// 'X-Content-Type-Options' => 'nosniff',
 		'X-XSS-Protection' => '1; mode=block',
-		// 'Cache-Control' => 'public; max-age=31536000; immutable;',
 	];
 
 	/**
@@ -31,9 +29,9 @@ class SecureHeaders
 	 * @return Response
 	 */
 	public function handle(Request $request, Closure $next) {
+		$response = $next($request);
+		
 		if (!headers_sent()) {
-			$response = $next($request);
-
 			// SETTER
 			foreach ($this->wantedHeaderList as $header => $value) {
 				header("{$header}:{$value}");
@@ -45,6 +43,6 @@ class SecureHeaders
 				header_remove($header);
 		}
 		
-		return $next($request);
+		return $response;
 	}
 }

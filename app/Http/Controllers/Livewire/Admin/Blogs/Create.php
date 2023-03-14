@@ -57,7 +57,7 @@ class Create extends Component
 	}
 
 	// FORM FUNCTIONS //
-	public function create(Request $req) {
+	public function create() {
 		$validator = Validator::make([
 			"title" => $this->title,
 			"summary" => $this->summary,
@@ -122,6 +122,10 @@ class Create extends Component
 				$i->setAttribute('data-filename', $ci->image_name);
 				$i->setAttribute('data-fallback-image', asset('/storage/uploads/blogs/default.png'));
 			}
+
+			// Removes all the script tags within
+			foreach (iterator_to_array($dom->getElementsByTagName('script')) as $script)
+				$script->parentNode->removeChild("script");
 
 			$blog->content = $dom->saveHTML();
 			$blog->save();
