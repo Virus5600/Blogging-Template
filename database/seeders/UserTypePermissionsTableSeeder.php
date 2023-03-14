@@ -48,21 +48,19 @@ class UserTypePermissionsTableSeeder extends Seeder
 			->permissions()
 			->sync(Permission::select(['id'])
 					->where('slug', '<>', 'change_owner')
-					->whereNotIn('parent_permission', [
-						$permPerm->id,
-						$typePerm->id
-					])
-					->whereNotIn('id', [
-						$permPerm->id,
-						$typePerm->id
-					])
-					->orWhereIn('parent_permission', [
-						$blogPerm->id,
-						$userPerm->id,
-					])
+					->where(function($query) {
+						$query->where('slug', 'NOT LIKE', 'blogs%perma_delete')
+							->where('slug', 'NOT LIKE', 'users%perma_delete');
+					})
+					->where(function($query) {
+						$query->where('slug', 'LIKE', 'blogs%delete')
+							->orWhere('slug', 'LIKE', 'users%create')
+							->orWhere('slug', 'LIKE', 'users%edit')
+							->orWhere('slug', 'LIKE', 'users%delete');
+					})
 					->orWhereIn('id', [
-						$userPerm->id,
-						$typePerm->id
+						$blogPerm->id,
+						$userPerm->id
 					])
 					->pluck('id')
 					->toArray()
