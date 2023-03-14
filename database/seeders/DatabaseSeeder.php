@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
 	{
 		$this->call([
 			SettingsTableSeeder::class,
+			PermissionsTableSeeder::class,
+			UserTypesTableSeeder::class,
+			UserTypePermissionsTableSeeder::class,
 			UsersTableSeeder::class,
 			CarouselsTableSeeder::class,
 			BlogsTableSeeder::class,

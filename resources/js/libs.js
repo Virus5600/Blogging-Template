@@ -10,7 +10,7 @@ try {
 	require('bootstrap-select/dist/js/bootstrap-select.min')
 
 	// Sweetalert 2
-	window.Swal = require('sweetalert2/dist/sweetalert2.min');
+	window.Swal = require('sweetalert2/dist/sweetalert2.all.min');
 
 	// Slick Carousel
 	window.slick = require('slick-carousel/slick/slick.min');

@@ -8,6 +8,8 @@
 $settings = [
 	'default-avatar' => App\Models\User::getDefaultAvatar()
 ];
+
+$authLvl = auth()->user()->userType->authority_level;
 @endphp
 
 <div class="container-fluid">
@@ -108,29 +110,45 @@ $settings = [
 									<input type="email" id="email" wire:model.lazy="email" class="form-control" placeholder="Email" value="{{ $email }}" />
 									<span class="text-danger small text-wrap">{{ $errors->first('email') }}</span>
 								</div>
+							</div>
+						</div>
+					</div>
 
-								{{-- USERNAME --}}
-								<div class="form-group col-12">
-									<label class="form-label" for="username">Username</label>
-									<input type="username" id="username" wire:model.lazy="username" class="form-control" placeholder="Username" value="{{ $username }}" />
-									<span class="text-danger small text-wrap">{{ $errors->first('username') }}</span>
-								</div>
+					<div class="row">
+						{{-- USERNAME --}}
+						<div class="form-group col-12">
+							<label class="form-label" for="username">Username</label>
+							<input type="username" id="username" wire:model.lazy="username" class="form-control" placeholder="Username" value="{{ $username }}" />
+							<span class="text-danger small text-wrap">{{ $errors->first('username') }}</span>
+						</div>
 
-								{{-- PASSWORD --}}
-								<div class="form-group col-12">
-									<label class="form-label" for="password">Password</label>
-									<div class="input-group">
-										<input class="form-control border-secondary border-right-0" type="password" wire:model.lazy="password" id="password" aria-label="Password" aria-describedby="toggle-show-password" placeholder="Password" readonly value="{{ $password }}" />
-										<div class="input-group-append">
-											<button type="button" class="btn bg-white border-secondary border-left-0" id="toggle-show-password" aria-label="Show Password" data-target="#password">
-												<i class="fas fa-eye d-none" id="show"></i>
-												<i class="fas fa-eye-slash" id="hide"></i>
-											</button>
-										</div>
-									</div>
-									<span class="text-danger small text-wrap">{{ $errors->first('password') }}</span>
+						{{-- PASSWORD --}}
+						<div class="form-group col-12">
+							<label class="form-label" for="password">Password</label>
+							<div class="input-group" wire:ignore>
+								<input class="form-control border-secondary border-right-0" type="password" wire:model.lazy="password" id="password" aria-label="Password" aria-describedby="toggle-show-password" placeholder="Password" readonly value="{{ $password }}" />
+								<div class="input-group-append">
+									<button type="button" class="btn bg-white border-secondary border-left-0" id="toggle-show-password" aria-label="Show Password" data-target="#password">
+										<i class="fas fa-eye d-none" id="show"></i>
+										<i class="fas fa-eye-slash" id="hide"></i>
+									</button>
 								</div>
 							</div>
+							<span class="text-danger small text-wrap">{{ $errors->first('password') }}</span>
+						</div>
+
+						{{-- USER TYPE --}}
+						<div class="form-group col-12">
+							<label for="user-type" class="form-label">User Type</label>
+							<div class="d-block" wire:ignore>
+								<select wire:ignore wire:model="userType" id="user-type" class="show-tick select-picker w-100 form-control" title="Select User Type" aria-label="Select User Type">
+									{{-- OPTIONS --}}
+									@foreach($types as $t)
+									<option value="{{ $authLvl <= $t->authority_level ? $t->id : 0 }}" {{ $authLvl <= $t->authority_level ? "" : "disabled" }}>{{ $t->name }}</option>
+									@endforeach
+								</select>
+							</div>
+							<span class="text-danger small text-wrap">{{ $errors->first('userType') }}</span>
 						</div>
 					</div>
 
@@ -160,6 +178,12 @@ $settings = [
 <script type="text/javascript" src="{{ asset('js/util/password-visibility-toggler.js') }}"></script>
 <script type="text/javascript" nonce="{{ csp_nonce() }}">
 	$(document).ready(() => {
+		$('.select-picker').selectpicker({
+			liveSearch: true,
+			liveSearchStyle: "contains",
+			style: "btn-white border-secondary-light",
+		}).trigger('change').trigger('change.bs.select');
+
 		$(`#submitButton`).on(`click`, (e) => {
 			$(`#actualSubmitButton`).click();
 		});

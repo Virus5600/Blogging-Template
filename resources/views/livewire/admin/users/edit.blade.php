@@ -8,6 +8,8 @@
 $settings = [
 	'default-avatar' => App\Models\User::getDefaultAvatar()
 ];
+
+$authLvl = auth()->user()->userType->authority_level;
 @endphp
 
 <div class="container-fluid">
@@ -109,13 +111,28 @@ $settings = [
 									<span class="text-danger small text-wrap">{{ $errors->first('email') }}</span>
 								</div>
 
-								{{-- USERNAME --}}
-								<div class="form-group col-12">
-									<label class="form-label" for="username">Username</label>
-									<input type="username" id="username" wire:model.lazy="username" class="form-control" placeholder="Username" value="{{ $username }}" />
-									<span class="text-danger small text-wrap">{{ $errors->first('username') }}</span>
-								</div>
 							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						{{-- USERNAME --}}
+						<div class="form-group col-12">
+							<label class="form-label" for="username">Username</label>
+							<input type="username" id="username" wire:model.lazy="username" class="form-control" placeholder="Username" value="{{ $username }}" />
+							<span class="text-danger small text-wrap">{{ $errors->first('username') }}</span>
+						</div>
+
+						{{-- USER TYPE --}}
+						<div class="form-group col-12">
+							<label for="user-type" class="form-label">User Type</label><br>
+							<select wire:model="userType" id="user-type" class="show-tick select-picker w-100 form-control" title="Select User Type" aria-label="Select User Type">
+								{{-- OPTIONS --}}
+								@foreach($types as $t)
+								<option value="{{ $authLvl <= $t->authority_level ? $t->id : 0 }}" {{ $authLvl <= $t->authority_level ? "" : "disabled" }} {{ $userType == $t->id ? "selected" : "" }}>{{ $t->name }}</option>
+								@endforeach
+							</select>
+							<span class="text-danger small text-wrap">{{ $errors->first('userType') }}</span>
 						</div>
 					</div>
 

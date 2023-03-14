@@ -1,5 +1,18 @@
 @section('title', 'Users')
 
+@php
+$user = auth()->user();
+
+$authLvl = $user->userType->authority_level;
+$isOwner = $authLvl == 1;
+
+$ownerAllow = $user->hasPermission('change_owner');
+$createAllowed = $user->hasPermission('users_tab_access', 'users_tab_create');
+$editAllowed = $user->hasPermission('users_tab_access', 'users_tab_edit');
+$permissionAllowed = $user->hasPermission('users_tab_access', 'users_tab_permissions');
+$deleteAllowed = $user->hasPermission('users_tab_access', 'users_tab_delete');
+@endphp
+
 <div class="d-flex flex-column" livewire-component>
 	{{-- HEADER --}}
 	<div class="row">
@@ -9,9 +22,11 @@
 
 		<div class="col-8 col-lg-4 d-flex">
 			{{-- ADD --}}
+			@if ($createAllowed)
 			<a href="{{ route('admin.users.create') }}" class="btn btn-success my-auto mx-1">
 				<i class="fas fa-plus-circle mr-2"></i>Add User
 			</a>
+			@endif
 
 			{{-- SEARCH --}}
 			<div class="input-group my-auto mx-1">
@@ -34,7 +49,7 @@
 						<tr>
 							<th class="text-center">Avatar</th>
 							<th class="text-center">Name</th>
-							<th class="text-center">email</th>
+							<th class="text-center">Email</th>
 							<th class="text-center">Status</th>
 							<th class="text-center"></th>
 						</tr>
@@ -80,12 +95,22 @@
 										</a>
 
 										{{-- EDIT --}}
+										@if (($editAllowed || $u->id == $user->id) && (($u->userType->authority_level >= $authLvl) || $isOwner))
 										<a href="{{ route('admin.users.edit', [$u->username]) }}" class="dropdown-item">
 											<i class="fas fa-pencil mr-2"></i>Edit
 										</a>
+										@endif
+
+										{{-- PERMISSIONS --}}
+										@if ($permissionAllowed && (($u->userType->authority_level > $authLvl) || $isOwner || $u->id == $user->id))
+										<a href="{{ route('admin.users.manage-permissions', [$u->username]) }}" class="dropdown-item">
+											<i class="fas fa-user-lock mr-2"></i>Manage Permissions
+										</a>
+										@endif
 										
 										{{-- CHANGE PASSWORD --}}
-										<a href="javascript:void(0);" class="dropdown-item change-password" id="scp-{{ $u->id }}" data='{"preventDefault": true, "name": "{{ $u->getName() }}",}'>
+										@if ((($editAllowed || $isOwner) && ($u->userType->authority_level > $authLvl)) || $u->id == $user->id)
+										<button class="dropdown-item change-password" id="scp-{{ $u->id }}" data='{"preventDefault": true, "name": "{{ $u->getName() }}",}'>
 											<i class="fas fa-lock mr-2"></i>Change Password
 											<script type="text/javascript" nonce="{{ csp_nonce() }}">
 												$(document).ready(() => {
@@ -103,18 +128,21 @@
 													$('#scp-{{ $u->id }}').find('script').remove();
 												});
 											</script>
-										</a>
+										</button>
+										@endif
 										
 										{{-- STATUS --}}
-										@if ($u->id != 1)
-											@if ($u->trashed())
-											<button class="dropdown-item" data-confirm-leave="activate,{{ $u->username }}" data-confirm-leave-message="{{ auth()->user()->id == $u->id ? "This will re-activate your account once more, allowing you to log back in using your account" : "This will re-activate the account once more, allowing the user to log back in using their account" }}" data-confirm-leave-livewire="@this">
-												<i class="fas fa-toggle-on mr-2"></i>Re-Activate
-											</a>
-											@else
-											<button class="dropdown-item" data-confirm-leave="deactivate,{{ $u->username }}" data-confirm-leave-message="{{ auth()->user()->id == $u->id ? "This will deactivate your account, logging you out forcibly and prevent you from accessing this account while deactivated" : "This will deactivate the account, logging them out forcibly on their next action and prevents them from accessing their account while deactivated" }}" data-confirm-leave-livewire="@this">
-												<i class="fas fa-toggle-off mr-2"></i>Deactivate
-											</a>
+										@if (($deleteAllowed || $u->id == $user->id || $isOwner) && ($u->userType->authority_level > $authLvl))
+											@if ($u->id != 1)
+												@if ($u->trashed())
+												<button class="dropdown-item" data-confirm-leave="activate,{{ $u->username }}" data-confirm-leave-message="{{ auth()->user()->id == $u->id ? "This will re-activate your account once more, allowing you to log back in using your account" : "This will re-activate the account once more, allowing the user to log back in using their account" }}" data-confirm-leave-livewire="@this">
+													<i class="fas fa-toggle-on mr-2"></i>Re-Activate
+												</button>
+												@else
+												<button class="dropdown-item" data-confirm-leave="deactivate,{{ $u->username }}" data-confirm-leave-message="{{ auth()->user()->id == $u->id ? "This will deactivate your account, logging you out forcibly and prevent you from accessing this account while deactivated" : "This will deactivate the account, logging them out forcibly on their next action and prevents them from accessing their account while deactivated" }}" data-confirm-leave-livewire="@this">
+													<i class="fas fa-toggle-off mr-2"></i>Deactivate
+												</button>
+												@endif
 											@endif
 										@endif
 									</div>
@@ -127,15 +155,11 @@
 						</tr>
 						@endforelse
 					</tbody>
-
-					<tfoot>
-						<tr>
-							<td colspan="5">
-								{{ $users->links() }}
-							</td>
-						</tr>
-					</tfoot>
 				</table>
+
+				<div id="table-paginate" class="w-100 d-flex align-middle my-3">
+					{{ $users->onEachSide(2)->links() }}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -145,4 +169,5 @@
 <script type="text/javascript" src="{{ asset('js/util/input-focus.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/util/confirm-leave.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/util/swal-change-password.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/util/password-visibility-toggler.js') }}"></script>
 @endsection

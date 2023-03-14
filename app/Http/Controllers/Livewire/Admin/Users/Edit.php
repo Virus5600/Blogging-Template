@@ -11,6 +11,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 
 use App\Models\User;
+use App\Models\UserType;
 
 use Carbon\Carbon;
 
@@ -26,13 +27,10 @@ class Edit extends Component
 	use WithFileUploads;
 
 	// Fields (models)
-	public $first_name, $middle_name, $last_name, $suffix, $birthdate, $email, $avatar, $username, $password;
+	public $first_name, $middle_name, $last_name, $suffix, $birthdate, $email, $avatar, $username, $userType;
 
 	// Holder fields
 	public $currentUsername;
-
-	// Single Initialization Variables
-	protected $settings;
 
 	// Validation
 	protected function rules($id) {
@@ -92,16 +90,23 @@ class Edit extends Component
 		$this->email = $user->email;
 		$this->avatar = $user->getAvatar();
 		$this->username = $user->username;
+		$this->userType = $user->userType->id;
 	}
 
 	public function render() {
-		return view('livewire.admin.users.edit')
+		$types = UserType::select(['id', 'name', 'authority_level'])
+			->without(['permissions'])
+			->get();
+
+		return view('livewire.admin.users.edit', [
+			'types' => $types
+		])
 			->extends('layouts.admin')
 			->section('content');
 	}
 
 	// FORM FUNCTIONS //
-	public function update(Request $req) {
+	public function update() {
 		$user = User::withTrashed()
 			->where('username', '=', $this->currentUsername)
 			->first();
@@ -125,6 +130,27 @@ class Edit extends Component
 			"username" => $this->username,
 		], $this->rules($user->id), $this->messages);
 
+		$userType = $this->userType;
+		$validator->after(function($validator) use ($userType) {
+			$typeTarget = UserType::withTrashed()
+				->find($this->userType);
+
+			if ($typeTarget != null) {
+				if ($typeTarget->authorization_level < auth()->user()->userType->authorization_level) {
+					$validator->errors()->add(
+						"userType",
+						"You have low authorization level to set someone else higher than yours"
+					);
+				}
+			}
+			else {
+				$validator->errors()->add(
+					"userType",
+					"User type does not exists"
+				);
+			}
+		});
+
 		if ($validator->fails()) {
 			$validator->validate();
 			return;
@@ -141,6 +167,7 @@ class Edit extends Component
 			$user->birthdate = $this->birthdate;
 			$user->email = $this->email;
 			$user->username = $this->username;
+			$user->userType = $this->userType;
 			$user->save();
 
 			// Removes the old image if it has. (Part 1)

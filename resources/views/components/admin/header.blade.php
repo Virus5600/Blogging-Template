@@ -7,12 +7,16 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
+			<div class="px-2 d-flex text-dark align-items-center" style="font-size: 1.25rem;">
+				({{ $user->userType->name }})
+			</div>
+
 			{{-- Navbar contents --}}
 			<div class="d-flex align-items-center ml-auto">
 				<img src="{{ $user->getAvatar() }}" class="circular-border branding" draggable='false' alt="{{ $user->getName() }}" data-fallback-img="{{ $user->getDefaultAvatar() }}"/>
 				<label>
 					<div class="dropdown">
-						<a href='#' role="button" class="nav-link dropdown-toggle text-dark dynamic-size-lg-h6" style="font-size: 1.25rem;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<a href='#' role="button" class="nav-link dropdown-toggle text-dark" style="font-size: 1.25rem;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							{{ $user->getName() }}
 						</a>
 

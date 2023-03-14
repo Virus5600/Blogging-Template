@@ -1,5 +1,14 @@
 @section('title', "User - @{$user->username}")
 
+@php
+$auth = auth()->user();
+
+$authLvl = $auth->userType->authority_level;
+$isOwner = $authLvl == 1;
+
+$editAllowed = $auth->hasPermission('users_tab_access', 'users_tab_edit');
+@endphp
+
 <div class="container-fluid pb-5">
 	<div class="row">
 		<div class="col-12 col-md mt-3">
@@ -48,7 +57,9 @@
 				</div>
 
 				<div class="card-footer text-right">
+					@if (($editAllowed || $user->id == $auth->id) && (($user->userType->authority_level >= $authLvl) || $isOwner))
 					<a href="{{ route('admin.users.edit', [$user->username]) }}" class="btn btn-primary">Edit</a>
+					@endif
 					<a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Go Back</a>
 				</div>
 			</div>

@@ -1,6 +1,6 @@
 $(document).ready(() => {
 	// Change submit to either "Updating" or "Submitting" after click
-	$('[type=submit], [data-action]').click(function(e) {
+	$(`[type=submit], [data-action]`).click(function(e) {
 		let action = $(e.currentTarget).attr('data-action');
 
 		if ($(e.currentTarget).attr('data-clicked') == 'true') {
@@ -13,7 +13,12 @@ $(document).ready(() => {
 				$(e.currentTarget).html(`<div class="spinner-border spinner-border-sm text-light" role="status"><span class="sr-only"></span></div> Updating...`);
 		}
 
-		$(e.currentTarget).addClass(`disabled cursor-default`);
-		$(e.currentTarget).attr('data-clicked', 'true');
+		$(e.currentTarget).addClass(`disabled cursor-default`)
+			.attr('data-clicked', 'true');
+	});
+
+	$(`[type=submit], [data-action]`).on('enable', (e) => {
+		$(e.currentTarget).removeClass(`disabled cursor-default`)
+			.attr('data-clicked', 'false');
 	});
 });
