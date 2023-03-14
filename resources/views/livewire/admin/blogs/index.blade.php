@@ -108,15 +108,11 @@
 						</tr>
 						@endforelse
 					</tbody>
-
-					<tfoot>
-						<tr>
-							<td colspan="5">
-								{{ $blogs->links() }}
-							</td>
-						</tr>
-					</tfoot>
 				</table>
+
+				<div id="table-paginate" class="w-100 d-flex align-middle my-3">
+					{{ $blogs->onEachSide(2)->links() }}
+				</div>
 			</div>
 		</div>
 	</div>
