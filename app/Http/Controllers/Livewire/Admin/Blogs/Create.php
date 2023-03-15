@@ -117,6 +117,10 @@ class Create extends Component
 					'image_name' => $image_name
 				]);
 
+				$cssClasses = $i->getAttribute('class');
+				$i->setAttribute('class', "max-width-100 {$cssClasses}");
+
+
 				$i->removeAttribute('src');
 				$i->setAttribute('src', $ci->getImage());
 				$i->setAttribute('data-filename', $ci->image_name);
