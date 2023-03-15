@@ -121,10 +121,8 @@ class Edit extends Component
 		}
 
 		if (gettype($this->avatar) == 'string') {
-			$this->avatar = substr($this->avatar, strlen(config('filesystems.disks.s3.url') . "/uploads/users/{$user->id}/"));
+			$this->avatar = substr($this->avatar, (strlen(config('filesystems.disks.s3.url') . "/uploads/users/{$user->id}/") + 1));
 		}
-
-		Log::error($this->avatar);
 
 		$validator = Validator::make([
 			"first_name" => $this->first_name,
