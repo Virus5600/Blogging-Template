@@ -124,7 +124,7 @@ class Edit extends Component
 			$this->avatar = substr($this->avatar, strlen(config('filesystems.disks.s3.url') . "/uploads/users/{$user->id}/"));
 		}
 
-		Log::debug($this->avatar);
+		Log::error($this->avatar);
 
 		$validator = Validator::make([
 			"first_name" => $this->first_name,
