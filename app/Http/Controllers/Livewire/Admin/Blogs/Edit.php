@@ -169,6 +169,9 @@ class Edit extends Component
 						'blog_id' => $blog->id,
 						'image_name' => $image_name
 					]);
+
+					$cssClasses = $i->getAttribute('class');
+					$i->setAttribute('class', "max-width-100 {$cssClasses}");
 					
 					$i->removeAttribute('src');
 					$i->setAttribute('src', $ci->getImage());
