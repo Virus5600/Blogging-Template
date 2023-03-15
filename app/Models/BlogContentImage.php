@@ -21,6 +21,11 @@ class BlogContentImage extends Model
 
 	// Custom Function
 	public function getImage() {
-		return Storage::disk('s3')->url('uploads/blogs/'.$this->blog->slug.'/content/'.$this->image_name);
+		$toRet = Storage::disk('s3')->url('uploads/blogs/'.$this->blog->slug.'/content/'.$this->image_name);
+		
+		if(config('app.env') === 'production' || config('app.env') === 'staging')
+				$toRet = preg_replace("/(http(?!s))(.+)/", "$1s$2", $toRet);
+		
+		return $toRet;
 	}
 }
