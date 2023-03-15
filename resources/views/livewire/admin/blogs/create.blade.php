@@ -174,7 +174,7 @@
 
 		$(`#submitButton`).on(`click`, (e) => {
 			let content = $(`textarea#content.summernote`);
-			@this.set('content', content);
+			@this.set('content', content.summernote('code'));
 			$(`#actualSubmitButton`).click();
 		});
 	});
