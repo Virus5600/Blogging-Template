@@ -72,7 +72,7 @@ class Edit extends Component
 		'username.unique' => 'Username already exists, please select another username',
 		'avatar.max' => 'Image should be below 5MB',
 		'avatar.mimes' => 'Selected file doesn\'t match the allowed image formats',
-		'avatar.exists' => 'a'
+		'avatar.exists' => ''
 	];
 
 	// COMPONENT FUNCTION //
@@ -123,6 +123,8 @@ class Edit extends Component
 		if (gettype($this->avatar) == 'string') {
 			$this->avatar = substr($this->avatar, strlen(config('filesystems.disks.s3.url') . "/uploads/users/{$user->id}/"));
 		}
+
+		Log::debug($this->avatar);
 
 		$validator = Validator::make([
 			"first_name" => $this->first_name,
