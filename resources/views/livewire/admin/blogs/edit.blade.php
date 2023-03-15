@@ -111,6 +111,7 @@
 
 @section('scripts')
 <script type="text/javascript" src="{{ asset('js/util/text-counter.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/util/disable-on-submit.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/util/confirm-leave.js') }}"></script>
 <script type="text/javascript" nonce="{{ csp_nonce() }}">
 	/* Source: https://davidwalsh.name/javascript-debounce-function
@@ -121,6 +122,7 @@
 	 */
 	const debounce = (func, wait, immediate) => {
 		var timeout;
+
 		return function() {
 			var context = this, args = arguments;
 			var later = function() {
@@ -167,20 +169,12 @@
 				link: [
 					['link', ['linkDialogShow', 'unlink']]
 				]
-			},
-			callbacks: {
-				onChange: (content, editable) => {
-					let fn = debounce(function(content) {
-						@this.set('content', content);
-					}, 250);
-
-					fn(content);
-				}
 			}
 		});
 
 		$(`#submitButton`).on(`click`, (e) => {
 			let content = $(`textarea#content.summernote`);
+			@this.set('content', content);
 			$(`#actualSubmitButton`).click();
 		});
 	});
