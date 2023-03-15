@@ -41,7 +41,7 @@ class Edit extends Component
 			'suffix' => array('nullable', 'string', 'max:255'),
 			'birthdate' => array('required', 'date', 'before:' . now()->format("Y-m-d")),
 			'email' => array('required', 'email', 'string', 'max:255', Rule::unique('users', 'email')->ignore($id)),
-			'avatar' => array('max:5120', 'mimes:jpeg,jpg,png,webp', 'nullable'),
+			'avatar' => (gettype($this->avatar) == 'string' ? array('exists:users,avatar') : array('nullable', 'max:5120', 'mimes:jpeg,jpg,png,webp')),
 			'username' => array('required', 'string', 'min:3', 'max:255', Rule::unique('users', 'username')->ignore($id)),
 		);
 	}
@@ -72,6 +72,7 @@ class Edit extends Component
 		'username.unique' => 'Username already exists, please select another username',
 		'avatar.max' => 'Image should be below 5MB',
 		'avatar.mimes' => 'Selected file doesn\'t match the allowed image formats',
+		'avatar.exists' => 'a'
 	];
 
 	// COMPONENT FUNCTION //
@@ -119,6 +120,10 @@ class Edit extends Component
 			return;
 		}
 
+		if (gettype($this->avatar) == 'string') {
+			$this->avatar = substr($this->avatar, strlen(config('filesystems.disks.s3.url') . "/uploads/users/{$user->id}/"));
+		}
+
 		$validator = Validator::make([
 			"first_name" => $this->first_name,
 			"middle_name" => $this->middle_name,
@@ -129,7 +134,6 @@ class Edit extends Component
 			"avatar" => $this->avatar,
 			"username" => $this->username,
 		], $this->rules($user->id), $this->messages);
-
 		$userType = $this->userType;
 		$validator->after(function($validator) use ($userType) {
 			$typeTarget = UserType::withTrashed()
@@ -167,18 +171,18 @@ class Edit extends Component
 			$user->birthdate = $this->birthdate;
 			$user->email = $this->email;
 			$user->username = $this->username;
-			$user->userType = $this->userType;
+			$user->user_type_id = $this->userType;
 			$user->save();
 
 			// Removes the old image if it has. (Part 1)
 			$forRemoval = false;
-			if ($user->avatar != null && $this->avatar != null) {
+			if ($user->avatar != null && $this->avatar != null && gettype($this->avatar) != 'string') {
 				$forRemoval = true;
 				$oldAvatar = $user->avatar;
 			}
 
 			// File handling
-			if ($this->avatar) {
+			if (gettype($this->avatar) != 'string') {
 				$destination = "uploads/users/{$user->id}";
 				$fileType = $this->avatar->getClientOriginalExtension();
 				$image = "{$user->id}-" . uniqid() . ".webp";
