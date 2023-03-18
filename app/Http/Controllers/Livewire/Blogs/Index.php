@@ -56,11 +56,16 @@ class Index extends Component
 		$search = "%{$cleaned['search']}%";
 		$searchQuery = function($query) use ($search) {
 			return $query->where("title", "LIKE", $search)
-				->orWhere("summary", "LIKE", $search);
+				->orWhere("blogs.summary", "LIKE", $search)
+				->orWhere("users.first_name", "LIKE", $search)
+				->orWhere("users.middle_name", "LIKE", $search)
+				->orWhere("users.last_name", "LIKE", $search)
+				->orWhere("users.username", "LIKE", $search);
 		};
 
-		$blogs = Blog::select(['title', 'summary', 'author', 'slug', 'poster', 'created_at'])
-			->where('is_draft', '=', 0)
+		$blogs = Blog::select(['blogs.title', 'blogs.summary', 'blogs.author', 'blogs.slug', 'blogs.poster', 'blogs.created_at'])
+			->leftJoin('users', 'users.id', '=', 'blogs.author')
+			->where('blogs.is_draft', '=', 0)
 			->where($searchQuery)
 			->{$cleaned['dateSort'] ?: 'latest'}()
 			->paginate((int) $cleaned['pages'] ?: 10, ["*"], 'blogsPage');
