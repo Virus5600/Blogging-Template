@@ -37,16 +37,16 @@ class Create extends Component
 
 	protected $messages = [
 		'title.required' => 'Title is required',
-		'title.string' => 'Invalid instorePublicly',
+		'title.string' => 'Invalid input',
 		'title.max' => 'Exceeded character count',
-		'summary.string' => 'Invalid instorePublicly',
+		'summary.string' => 'Invalid input',
 		'summary.max' => 'Exceeded character count',
 		'poster.image' => 'Poster should be an image file (jpg, jpeg, png, bmp, gif, svg, or webp)',
 		'poster.max' => 'Maximum file size is 10MB',
 		'content.required' => 'Content is required',
-		'content.string' => 'Invalid instorePublicly',
+		'content.string' => 'Invalid input',
 		'content.max' => 'Exceeded character count',
-		'is_draft.boolean' => 'Invalid instorePublicly'
+		'is_draft.boolean' => 'Invalid input'
 	];
 
 	// COMPONENT FUNCTION //
